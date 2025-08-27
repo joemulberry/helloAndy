@@ -39,8 +39,8 @@ def parsePlayer(url):
         if 'Date of birth/Age:' in li.text:
             items = li.text.split(':')[1].split('(')[0].strip().split('.')
             store['dayBirth'] = int(items[0])
-            store['monthBirth'] = int(items[0])
-            store['yearBirth'] = int(items[0])
+            store['monthBirth'] = int(items[1])
+            store['yearBirth'] = int(items[2])
 
     
     store['infoRaw'] = infoRaw
