@@ -24,10 +24,14 @@ def parsePlayer(url):
 
     store = {}
 
-    # ------- get soup -------- #
+    # ------- get soups -------- #
 
     url = 'https://www.transfermarkt.co.uk/jude-bellingham/profil/spieler/581678'
     soup = get_souped_page(url)
+
+    nationalTeamURL = url.replace('profil', 'nationalmannschaft')
+    soupNationalTeam = get_souped_page(nationalTeamURL)
+    # https://www.transfermarkt.co.uk/jude-bellingham/nationalmannschaft/spieler/581678/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2025&ende=27.08.2025&nurEinsatz=0 
 
     # ------- name -------- #
     store['name'] = soup.find('h1').text.split('\n')[3].strip()
@@ -115,8 +119,6 @@ def parsePlayer(url):
             store['daysUntilContractExpires'] = delta.days
             store['monthsUntilContractExpires'] = (contract_date.year - today.year) * 12 + (contract_date.month - today.month)
 
-
-    store['bigbox'] = bigBox
 
     return store
 
