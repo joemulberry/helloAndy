@@ -67,6 +67,18 @@ def parsePlayer(url):
         if 'Position' in li.text: 
             store['position'] = li.text.split(':')[1].strip() 
 
+    for li in infoRaw: 
+        if 'Current international:' in li.text: 
+            store['nationalTeam'] = li.find('img')['title']
+
+    for li in infoRaw: 
+        if 'Position' in li.text: 
+            store['position'] = li.text.split(':')[1].strip() 
+
+    for li in infoRaw: 
+        if 'Position' in li.text: 
+            store['position'] = li.text.split(':')[1].strip() 
+
 
     store['infoRaw'] = infoRaw
     return store
