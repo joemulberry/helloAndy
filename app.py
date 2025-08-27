@@ -1,6 +1,19 @@
 import streamlit as st
 from datetime import datetime
 import pandas as pd 
+from bs4 import BeautifulSoup
+from random import choice 
+import requests 
+
+
+
+
+def parsePlayer(url):
+
+
+
+
+
 
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
