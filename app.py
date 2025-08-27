@@ -42,12 +42,10 @@ def parsePlayer(url):
             store['monthBirth'] = int(items[1])
             store['yearBirth'] = int(items[2])
 
-    for li in infoRaw: 
         if 'Place of birth:' in li.text:
             store['placeBirth'] = li.text.split(':')[1].strip()
             store['countryBirth'] = li.find('img')['title']
             
-    for li in infoRaw: 
         if 'Citizenship' in li.text:   
             if len(li.find_all('img')) == 1:                     
                 store['citizensip1'] = li.find_all('img')[0]['title']
@@ -58,20 +56,16 @@ def parsePlayer(url):
                 store['citizensip1'] = None
                 store['citizensip2'] = None
 
-    for li in infoRaw: 
         if 'Height' in li.text:  
             store['height'] = int(li.text.split(':')[1].strip().replace(',','').replace('m', '').strip())
 
     
-    for li in infoRaw: 
         if 'Position' in li.text: 
             store['position'] = li.text.split(':')[1].strip() 
 
-    for li in infoRaw: 
         if 'Current international:' in li.text: 
             store['nationalTeam'] = li.find('img')['title']
 
-    for li in infoRaw: 
         if 'Caps/Goals' in li.text:
             parts =  li.text.split(':')[1].strip().split('/')
             store['internationalCaps'] = int(parts[0])
@@ -94,8 +88,8 @@ def parsePlayer(url):
     labels = bigBox.find_all('span', class_= 'data-header__label')
 
     for label in labels: 
-        if 'League level:' in label.text:
 
+        if 'League level:' in label.text:
             leagueTierText = label.text.split(':')[1].strip()
             if leagueTierText == 'First Tier':
                 store['leagueTier'] = 1
@@ -109,6 +103,12 @@ def parsePlayer(url):
                 store['leagueTier'] = 4 
             elif leagueTierText == 'Fifth Tier':
                 store['leagueTier'] = 5           
+
+        if 'Contract expires:' in label.text:
+            items = label.text.split(':')[1].split('(')[0].strip().split('.')
+            store['dayContractExpires'] = int(items[0])
+            store['monthContractExpires'] = int(items[1])
+            store['yearContractExpires'] = int(items[2])
 
 
     store['bigbox'] = bigBox
