@@ -6,13 +6,13 @@ APP_PASSWORD = "letmein"
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 
-password = st.text_input("Enter password", type="password")
-
-if password:
-    if password == APP_PASSWORD:
-        st.session_state.authenticated = True
-    else:
-        st.error("Wrong password, try again.")
+if not st.session_state.authenticated:
+    password = st.text_input("Enter password", type="password")
+    if password:
+        if password == APP_PASSWORD:
+            st.session_state.authenticated = True
+        else:
+            st.error("Wrong password, try again.")
 
 if st.session_state.authenticated:
     st.set_page_config(page_title="Hello Streamlit", page_icon="👋", layout="centered")
