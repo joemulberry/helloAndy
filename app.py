@@ -33,7 +33,7 @@ def parsePlayer(url):
     store['name'] = soup.find('h1').text.split('\n')[3].strip()
     
     # ------- info -------- #
-    store['infoRaw'] = soup.find('div', class_ = 'data-header__info-box')
+    store['infoRaw'] = soup.find('ul', class_ = 'data-header__items')
     
     
     
