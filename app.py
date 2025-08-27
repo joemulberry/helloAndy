@@ -22,13 +22,16 @@ def get_souped_page(page_url):
 
 def parsePlayer(url):
 
+    store = {}
+
     # ------- playground -------- #
 
     url = 'https://www.transfermarkt.co.uk/jude-bellingham/profil/spieler/581678'
     soup = get_souped_page(url)
 
-    st.write(soup)
 
+    store['name'] = soup.find('h1').text
+    return store
 
 
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
@@ -55,7 +58,8 @@ if st.session_state.authenticated:
 
     if playerURL != "":
         st.write(playerURL)
-        parsePlayer(playerURL)
+        playerInfo = parsePlayer(playerURL)
+        st.write(playerInfo)
     
 
 if __name__ == "__main__":
