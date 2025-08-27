@@ -30,7 +30,7 @@ def parsePlayer(url):
     soup = get_souped_page(url)
 
 
-    store['name'] = soup.find('h1').text
+    store['name'] = soup.find('h1').text.split('\n')
     return store
 
 
