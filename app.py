@@ -42,6 +42,12 @@ def parsePlayer(url):
             store['monthBirth'] = int(items[1])
             store['yearBirth'] = int(items[2])
 
+    for li in infoRaw: 
+        if 'Place of birth:' in li.text:
+            store['placeBirth'] = li.text.split(':')[1].strip()
+            
+            
+
     
     store['infoRaw'] = infoRaw
     return store
