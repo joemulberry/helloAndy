@@ -89,7 +89,7 @@ def parsePlayer(url):
 
     store['currentLeague'] = leagueInfo.find('img')['alt']
     store['currentLeagueURL'] = leagueInfo.find('a')['href']
-    # store['currentLeagueID'] = int(store['currentLeagueURL'].split('/')[-1])
+    store['currentLeagueID'] = store['currentLeagueURL'].split('/')[-1]
     
 
     store['leagueInfo'] = leagueInfo
