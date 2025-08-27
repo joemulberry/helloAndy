@@ -58,6 +58,10 @@ def parsePlayer(url):
                 store['citizensip1'] = None
                 store['citizensip2'] = None
 
+    for li in infoRaw: 
+        if 'Height' in li.text:  
+            store['height'] = int(li.text.split(':')[1].strip().replace(',','').replace('m', '').strip())
+
     
     store['infoRaw'] = infoRaw
     return store
