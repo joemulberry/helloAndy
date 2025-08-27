@@ -145,8 +145,8 @@ if not st.session_state.authenticated:
     with st.sidebar:
         st.header("Login")
         password = st.text_input("Enter password", type="password")
-        if st.button("Force rerun"):
-            st.experimental_rerun()
+        if st.button("Force rerun", key="force_rerun_login"):
+            st.rerun()
     if password:
         if password == APP_PASSWORD:
             st.session_state.authenticated = True
@@ -155,8 +155,8 @@ if not st.session_state.authenticated:
 
 if st.session_state.authenticated:
     with st.sidebar:
-        if st.button("Force rerun"):
-            st.experimental_rerun()
+        if st.button("Force rerun", key="force_rerun_authed"):
+            st.rerun()
     st.title('GBE/ESC Checker')
 
     st.text_input('playerURL', value="", key='playerURL', on_change=_on_player_url_change)
