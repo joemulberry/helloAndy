@@ -24,13 +24,19 @@ def parsePlayer(url):
 
     store = {}
 
-    # ------- playground -------- #
+    # ------- get soup -------- #
 
     url = 'https://www.transfermarkt.co.uk/jude-bellingham/profil/spieler/581678'
     soup = get_souped_page(url)
 
-
+    # ------- name -------- #
     store['name'] = soup.find('h1').text.split('\n')[3].strip()
+    
+    # ------- info -------- #
+    store['infoRaw'] = soup.find('div', class_ = 'data-header__info-box').text
+    
+    
+    
     return store
 
 
