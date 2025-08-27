@@ -95,9 +95,22 @@ def parsePlayer(url):
 
     for label in labels: 
         if 'League level:' in label.text:
-            store['leagueLevel'] = label.text.split(':')[1].strip()
 
-    store['leagueInfo'] = leagueInfo
+            leagueTierText = label.text.split(':')[1].strip()
+            if leagueTierText == 'First Tier':
+                store['leagueTier'] = 1
+            elif leagueTierText == 'Second Tier':
+                store['leagueTier'] = 2    
+            elif leagueTierText == 'Second Tier':
+                store['leagueTier'] = 2 
+            elif leagueTierText == 'Third Tier':
+                store['leagueTier'] = 3 
+            elif leagueTierText == 'Fourth Tier':
+                store['leagueTier'] = 4 
+            elif leagueTierText == 'Fifth Tier':
+                store['leagueTier'] = 5           
+
+
     store['bigbox'] = bigBox
 
     return store
