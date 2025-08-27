@@ -118,6 +118,10 @@ def parsePlayer(url):
             store['daysUntilContractExpires'] = delta.days
             store['monthsUntilContractExpires'] = (contract_date.year - today.year) * 12 + (contract_date.month - today.month)
 
+        if 'League level' in label.text:
+            store['currentLeagueCountry'] = label.find('img')['title']
+
+
     store['labels'] = labels
 
     return store
