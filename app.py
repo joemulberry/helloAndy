@@ -91,6 +91,11 @@ def parsePlayer(url):
     store['currentLeagueURL'] = leagueInfo.find('a')['href']
     store['currentLeagueID'] = store['currentLeagueURL'].split('/')[-1]
     
+    labels = bigBox.find_all('span', class_= 'data-header__label')
+
+    for label in labels: 
+        if 'League level:' in label.text:
+            store['leagueLevel'] = label.text.split(':')[1].strip()
 
     store['leagueInfo'] = leagueInfo
     store['bigbox'] = bigBox
