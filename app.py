@@ -45,7 +45,7 @@ def parsePlayer(url):
     for li in infoRaw: 
         if 'Place of birth:' in li.text:
             store['placeBirth'] = li.text.split(':')[1].strip()
-            
+            store['countryBirth'] = li.find('img')['title']
             
 
     
