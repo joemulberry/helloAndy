@@ -85,6 +85,10 @@ def parsePlayer(url):
     store['currentClubURL'] = bigBox.find('a')['href']
     store['currentClubID'] = int(store['currentClubURL'].split('/')[-1])
     
+    leagueInfo = bigBox.find('span', class_='data-header__league')
+
+
+    store['leagueInfo'] = leagueInfo
     store['bigbox'] = bigBox
 
     return store
