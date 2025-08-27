@@ -161,7 +161,7 @@ if st.session_state.authenticated:
 
     st.text_input('playerURL', value="", key='playerURL', on_change=_on_player_url_change)
 
-    if 'playerInfo' in st.session_state:
+    if st.session_state['playerURL'] != "":
         st.write(st.session_state['playerURL'])
         st.write(st.session_state['playerInfo'])
 
