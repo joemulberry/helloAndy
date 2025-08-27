@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from random import choice 
 import requests 
 
+
+st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 st.set_option('server.runOnSave', True)
 
 
@@ -134,7 +136,6 @@ def _on_player_url_change():
     if url:
         st.session_state['playerInfo'] = parsePlayer(url)
 
-st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
 APP_PASSWORD = "letmein"
 
