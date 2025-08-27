@@ -161,11 +161,12 @@ if st.session_state.authenticated:
             st.rerun()
     st.title('GBE/ESC Checker')
 
-    st.text_input('playerURL', value="", key='playerURL', on_change=_on_player_url_change)
+    playerURL = st.text_input('playerURL', value="")
 
-    if st.session_state['playerURL'] != "":
-        st.write(st.session_state['playerURL'])
-        st.write(st.session_state['playerInfo'])
+    if playerURL != "":
+        playerInfo = parsePlayer(playerURL)
+        st.write(playerURL)
+        st.write(playerInfo)
 
     
 if __name__ == "__main__":
