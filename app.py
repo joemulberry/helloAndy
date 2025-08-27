@@ -126,7 +126,7 @@ def parsePlayer(url):
 
 
     # store['labels'] = labels
-    # store['test'] = '1!!!!!!!!!!!!!!!!'
+    store['test'] = '1!!!!!!!!!!!!!!!!'
 
     return store
 
@@ -164,7 +164,7 @@ if st.session_state.authenticated:
     if 'playerInfo' in st.session_state:
         st.write(st.session_state['playerURL'])
         st.write(st.session_state['playerInfo'])
-    
 
+    
 if __name__ == "__main__":
     pass
