@@ -125,17 +125,17 @@ def parsePlayer(url):
             store['currentLeagueCountry'] = label.find('img')['title']
 
 
-    # store['labels'] = labels
+    store['labels'] = labels
     # store['test'] = '1!!!!!!!!!!!!!!!!'
     store['test'] = '1xxxxxxx'
 
 
     return store
 
-def _on_player_url_change():
-    url = st.session_state.get('playerURL', '')
-    if url:
-        st.session_state['playerInfo'] = parsePlayer(url)
+# def _on_player_url_change():
+#     url = st.session_state.get('playerURL', '')
+#     if url:
+#         st.session_state['playerInfo'] = parsePlayer(url)
 
 
 APP_PASSWORD = "letmein"
