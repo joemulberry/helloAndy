@@ -118,6 +118,7 @@ def parsePlayer(url):
             store['daysUntilContractExpires'] = delta.days
             store['monthsUntilContractExpires'] = (contract_date.year - today.year) * 12 + (contract_date.month - today.month)
 
+    store['labels'] = labels
 
     return store
 
