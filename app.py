@@ -26,7 +26,6 @@ def parsePlayer(url):
 
     # ------- get soups -------- #
 
-    url = 'https://www.transfermarkt.co.uk/jude-bellingham/profil/spieler/581678'
     soup = get_souped_page(url)
 
     nationalTeamURL = url.replace('profil', 'nationalmannschaft')
@@ -122,6 +121,10 @@ def parsePlayer(url):
 
     return store
 
+def _on_player_url_change():
+    url = st.session_state.get('playerURL', '')
+    if url:
+        st.session_state['playerInfo'] = parsePlayer(url)
 
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
@@ -143,12 +146,11 @@ if not st.session_state.authenticated:
 if st.session_state.authenticated:
     st.title('GBE/ESC Checker')
 
-    playerURL = st.text_input('playerURL', value="", max_chars=None, key=None)
+    st.text_input('playerURL', value="", key='playerURL', on_change=_on_player_url_change)
 
-    if playerURL != "":
-        st.write(playerURL)
-        playerInfo = parsePlayer(playerURL)
-        st.write(playerInfo)
+    if 'playerInfo' in st.session_state:
+        st.write(st.session_state['playerURL'])
+        st.write(st.session_state['playerInfo'])
     
 
 if __name__ == "__main__":
