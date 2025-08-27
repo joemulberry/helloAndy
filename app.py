@@ -51,8 +51,12 @@ def parsePlayer(url):
         if 'Citizenship' in li.text:   
             if len(li.find_all('img')) == 1:                     
                 store['citizensip1'] = li.find_all('img')[0]['title']
-            if len(li.find_all('img')) == 2:                     
+                store['citizensip2'] = None
+            elif len(li.find_all('img')) == 2:                     
                 store['citizensip2'] = li.find_all('img')[1]['title']
+            else:
+                store['citizensip1'] = None
+                store['citizensip2'] = None
 
     
     store['infoRaw'] = infoRaw
