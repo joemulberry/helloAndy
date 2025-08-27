@@ -77,12 +77,9 @@ def parsePlayer(url):
             store['internationalCaps'] = int(parts[0])
             store['internationalGoals'] = int(parts[1])
 
-    for li in infoRaw: 
-        if 'Position' in li.text: 
-            store['position'] = li.text.split(':')[1].strip() 
 
 
-    store['infoRaw'] = infoRaw
+
     return store
 
 
