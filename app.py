@@ -33,10 +33,17 @@ def parsePlayer(url):
     store['name'] = soup.find('h1').text.split('\n')[3].strip()
     
     # ------- info -------- #
-    store['infoRaw'] = soup.find_all('li', class_ = 'data-header__label')
+    infoRaw = soup.find_all('li', class_ = 'data-header__label')
     
+    for li in infoRaw: 
+        if 'Date of birth/Age:' in li.text:
+            items = li.text.split(':')[1].split('(')[0].strip().split('.')
+            store['dayBirth'] = int(items[0])
+            store['monthBirth'] = int(items[0])
+            store['yearBirth'] = int(items[0])
+
     
-    
+    store['infoRaw'] = infoRaw
     return store
 
 
