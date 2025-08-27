@@ -126,7 +126,7 @@ def parsePlayer(url):
 
 
     # store['labels'] = labels
-    store['test'] = '1!!!!!!!!!!!!!!!!'
+    # store['test'] = '1!!!!!!!!!!!!!!!!'
 
     return store
 
