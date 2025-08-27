@@ -81,6 +81,7 @@ def parsePlayer(url):
     # ------- big box -------
     bigBox = soup.find('div', class_= 'data-header__box--big')
     
+    store['currentClub'] = bigBox.find('img')['alt']
     
     store['bigbox'] = bigBox
 
