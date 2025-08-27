@@ -122,7 +122,7 @@ def parsePlayer(url):
             store['currentLeagueCountry'] = label.find('img')['title']
 
 
-    store['labels'] = labels
+    # store['labels'] = labels
 
     return store
 
