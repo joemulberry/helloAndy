@@ -83,7 +83,7 @@ def parsePlayer(url):
     
     store['currentClub'] = bigBox.find('img')['alt']
     store['currentClubURL'] = bigBox.find('a')['href']
-    store['currentClubID'] = store['currentClubURL'].split('/')[-1]
+    store['currentClubID'] = int(store['currentClubURL'].split('/')[-1])
     
     store['bigbox'] = bigBox
 
