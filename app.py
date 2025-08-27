@@ -88,8 +88,8 @@ def parsePlayer(url):
     leagueInfo = bigBox.find('span', class_='data-header__league')
 
     store['currentLeague'] = leagueInfo.find('img')['alt']
-    store['currentLeagueURL'] = bigBox.find('a')['href']
-    store['currentLeagueID'] = int(store['currentClubURL'].split('/')[-1])
+    store['currentLeagueURL'] = leagueInfo.find('a')['href']
+    store['currentLeagueID'] = int(store['currentLeagueURL'].split('/')[-1])
     
 
     store['leagueInfo'] = leagueInfo
