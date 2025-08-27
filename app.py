@@ -9,7 +9,7 @@ import requests
 
 
 def parsePlayer(url):
-
+    pass
 
 
 
