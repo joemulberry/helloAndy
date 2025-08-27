@@ -149,7 +149,7 @@ if not st.session_state.authenticated:
             st.error("Wrong password, try again.")
 
 if st.session_state.authenticated:
-    st.title('GBE/ESC Checker')
+    st.title('GBE/ESC Checkerr')
 
     st.text_input('playerURL', value="", key='playerURL', on_change=_on_player_url_change)
 
