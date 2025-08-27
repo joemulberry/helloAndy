@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from random import choice 
 import requests 
 
+st.set_option('server.runOnSave', True)
+
 
 # ------- undected scrap for Transfermarkt -------- #
 def get_souped_page(page_url):
@@ -123,6 +125,7 @@ def parsePlayer(url):
 
 
     store['labels'] = labels
+    store['test'] = '1!!!!!!!!!!!!!!!!'
 
     return store
 
@@ -142,6 +145,8 @@ if not st.session_state.authenticated:
     with st.sidebar:
         st.header("Login")
         password = st.text_input("Enter password", type="password")
+        if st.button("Force rerun"):
+            st.experimental_rerun()
     if password:
         if password == APP_PASSWORD:
             st.session_state.authenticated = True
@@ -149,7 +154,10 @@ if not st.session_state.authenticated:
             st.error("Wrong password, try again.")
 
 if st.session_state.authenticated:
-    st.title('GBE/ESC Checkerr')
+    with st.sidebar:
+        if st.button("Force rerun"):
+            st.experimental_rerun()
+    st.title('GBE/ESC Checker')
 
     st.text_input('playerURL', value="", key='playerURL', on_change=_on_player_url_change)
 
