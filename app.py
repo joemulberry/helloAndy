@@ -78,7 +78,11 @@ def parsePlayer(url):
             store['internationalGoals'] = int(parts[1])
 
 
-
+    # ------- big box -------
+    bigBox = soup.find('div', class_= 'data-header__box--big')
+    
+    
+    store['bigbox'] = bigBox
 
     return store
 
