@@ -14,7 +14,6 @@ if not st.session_state.authenticated:
     if password:
         if password == APP_PASSWORD:
             st.session_state.authenticated = True
-            st.experimental_rerun()
         else:
             st.error("Wrong password, try again.")
 
