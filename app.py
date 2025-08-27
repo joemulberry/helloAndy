@@ -24,6 +24,8 @@ if st.session_state.authenticated:
 
     playerURL = st.text_input('playerURL', value="", max_chars=None, key=None)
 
+    if playerURL != "":
+        st.write(playerURL)
     
 
 if __name__ == "__main__":
