@@ -84,7 +84,7 @@ def getNationalTeam(playerURL, transferDate):
         #         matches.append(d)
         pass
     
-    allMatches += team['teamID']
+    # allMatches += team['teamID']
     ntInfo = allMatches
     # ntInfo = teamOptions
 
