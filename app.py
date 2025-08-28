@@ -171,6 +171,12 @@ if st.session_state.authenticated:
         transferDate  = st.date_input("When is the proposed transfer?", date(2026, 1, 2))
         st.write(transferDate)
 
-    
+        nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
+        st.write(nationalTeamURL)
+        # soupNationalTeam = get_souped_page(nationalTeamURL)
+    # https://www.transfermarkt.co.uk/jude-bellingham/nationalmannschaft/spieler/581678/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2025&ende=27.08.2025&nurEinsatz=0 
+
+
+
 if __name__ == "__main__":
     pass
