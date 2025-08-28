@@ -53,14 +53,23 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
             matches = []
         else: 
             cells = row.find_all('td')
-            matches.append(
-                {
+            d = {
                     'competition': competition,
                     'competitionID': competitionID,
                     'a' : cells[2].text,
-                    'cells':cells
+                    'home/away': cells[3].text,
+                    'for': cells[4].find('a')['title'],
+                    'against': cells[6].text,
+                    'result':cells[7].text,
+                    'minutesPlayed': int(cells[14].text)
                 }
-            )
+            
+            if d['minutesPlayed'] > 0:
+                d['played'] = True
+            else:
+                d['played'] = False
+
+            matches.append(d)
 
 
     ntInfo = allMatches
