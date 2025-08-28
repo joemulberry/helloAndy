@@ -17,6 +17,20 @@ def subtract_years(d, years):
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
 
+def getNationalTeam(playerURL, transferDate, teamID = '20796'):
+    nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
+    part1 =  '/verein_id/' + str(teamID) + '/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
+    startDate_date = subtract_years(transferDate, 2)
+    startDate = startDate_date.strftime("%d.%m.%Y")
+    part2 = '&ende=' + date.today().strftime("%d.%m.%Y") + '&nurEinsatz=0'
+    nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
+    soup = get_souped_page(nationalTeamURLSubSection)
+
+    table = soup.find('table')
+
+    return table 
+        
+
 # ------- undected scrap for Transfermarkt -------- #
 def get_souped_page(page_url):
         headers_list = [
@@ -179,13 +193,7 @@ if st.session_state.authenticated:
         transferDate  = st.date_input("When is the proposed transfer?", date.today())
         st.write(transferDate.month)
 
-        nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
-        part1 =  '/verein_id/20796/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
-        startDate_date = subtract_years(transferDate, 2)
-        startDate = startDate_date.strftime("%d.%m.%Y")
-        part2 =  '&ende=27.08.2025&nurEinsatz=0'
-        st.write(nationalTeamURL + part1 + startDate + part2)
-        
+        st.write(getNationalTeam(playerURL, transferDate))
         
         # transferDate
         # day month year 
