@@ -79,7 +79,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
     allMatches += matches
 
     ntInfo = allMatches
-    ntInfo = table2
+    # ntInfo = table2
 
     return [ntInfo, nationalTeamURLSubSection]
         
