@@ -297,7 +297,7 @@ if st.session_state.authenticated:
             with col3:
                 st.metric("% of team matches", f"{pct_played:.1f}%")
 
-            st.table(team_df)
+            # st.table(team_df)
 
   
         
