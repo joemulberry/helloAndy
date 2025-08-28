@@ -88,7 +88,7 @@ def getNationalTeam(playerURL, transferDate):
     ntInfo = allMatches
     # ntInfo = teamOptions
 
-    return [teamOptions[0], 'nationalTeamURLSubSection']
+    return [teamOptions[0]['teamID'], 'nationalTeamURLSubSection']
             
 
 # ------- undected scrap for Transfermarkt -------- #
