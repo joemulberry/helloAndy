@@ -260,7 +260,21 @@ if st.session_state.authenticated:
 
     if playerInfo != None:
         transferDate  = st.date_input("When is the proposed transfer?", date.today())
-        st.write(transferDate.month)
+
+        # --- Age check callout (18+) ---
+        try:
+            dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
+            # Compute age at transferDate
+            age_years = transferDate.year - dob.year - ((transferDate.month, transferDate.day) < (dob.month, dob.day))
+
+            if age_years >= 18:
+                st.success(f"Player will be {age_years} on {transferDate.strftime('%d %b %Y')} — meets 18+ requirement.")
+            else:
+                st.error(f"Player will be {age_years} on {transferDate.strftime('%d %b %Y')} — under 18.")
+        except Exception as e:
+            st.warning(f"Could not determine age: {e}")
+
+        
 
         ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
 
