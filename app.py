@@ -161,11 +161,15 @@ if st.session_state.authenticated:
     st.title('GBE/ESC Checker')
 
     playerURL = st.text_input('playerURL', value="")
-
+    playerInfo = None
     if playerURL != "":
         playerInfo = parsePlayer(playerURL)
         st.write(playerURL)
         st.write(playerInfo)
+
+    if playerInfo != None:
+        transferDate  = st.date_input("When is the proposed transfer?", datetime.date(2026, 1, 2))
+        st.write(transferDate)
 
     
 if __name__ == "__main__":
