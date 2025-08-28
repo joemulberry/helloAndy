@@ -306,7 +306,7 @@ if st.session_state.authenticated:
             age_years = None
             dob_str = "Unknown"
 
-        st.markdown("##### " + playerInfo.get('name', '') + ' [' + {country} + '] (' + {dob_str} +')')
+        st.markdown("##### " + playerInfo.get('name', '') + ' [' + {country} + '] (' + {age_years if age_years is not None else '—'} +' yrs)')
 
         colA, colB, colC, colD = st.columns([1, 2, 2, 2])
         with colA:
