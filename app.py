@@ -301,7 +301,8 @@ if st.session_state.authenticated:
             colA, colB, colC, colD = st.columns([1, 2, 2, 2])
             with colA:
                 crest = playerInfo.get('clubImage')
-               
+                if crest:
+                    st.image(crest, use_container_width=False)
             with colB:
                 country = playerInfo.get('citizensip1') or playerInfo.get('countryBirth', '')
                 st.markdown(f"**Country:** {country}")
