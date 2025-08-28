@@ -180,7 +180,7 @@ if st.session_state.authenticated:
         st.write(transferDate.month)
 
         nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
-        part1 =  '/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
+        part1 =  '/verein_id/20796/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
         startDate_date = subtract_years(transferDate, 2)
         startDate = startDate_date.strftime("%d.%m.%Y")
         part2 =  '&ende=27.08.2025&nurEinsatz=0'
@@ -192,7 +192,7 @@ if st.session_state.authenticated:
         # soupNationalTeam = get_souped_page(nationalTeamURL)
     # https://www.transfermarkt.co.uk/jude-bellingham/nationalmannschaft/spieler/581678/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2025&ende=27.08.2025&nurEinsatz=0 
 
-
-
+# https://www.transfermarkt.co.uk/luka-hyrylainen/nationalmannschaft/spieler/716898/verein_id/20796/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2024&ende=28.08.2025&nurEinsatz=0
+# https://www.transfermarkt.co.uk/luka-hyrylainen/nationalmannschaft/spieler/716898/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2024&ende=27.08.2025&nurEinsatz=0
 if __name__ == "__main__":
     pass
