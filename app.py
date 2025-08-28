@@ -41,7 +41,7 @@ def getNationalTeam(playerURL, transferDate):
 
     allMatches = []
     for team in teamOptions[0]:
-
+        print(team)
         part1 =  '/verein_id/' + team['teamID'] + '/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
         startDate_date = subtract_years(transferDate, 2)
         startDate = startDate_date.strftime("%d.%m.%Y")
