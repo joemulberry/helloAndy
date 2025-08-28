@@ -71,6 +71,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
 
             matches.append(d)
 
+    allMatches += matches
 
     ntInfo = allMatches
 
