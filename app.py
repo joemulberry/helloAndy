@@ -74,7 +74,7 @@ def getNationalTeam(playerURL, transferDate):
                         }
                     
                     
-                    if 'Not in Squad' not in row.text:
+                    if 'Not in squad' not in row.text:
                         d['minutesPlayed'] = int(cells[14].text.replace("'", ""))
 
                         if d['minutesPlayed'] > 0:
