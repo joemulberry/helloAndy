@@ -292,54 +292,54 @@ if st.session_state.authenticated:
                 st.warning(f"Could not determine age: {e}")
 
         # --- Player overview ---
-        with st.container():
-            st.markdown("### " + playerInfo.get('name', ''))
-            # Compute DOB string and age safely (relative to transferDate)
-            try:
-                dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
-                age_years = transferDate.year - dob.year - ((transferDate.month, transferDate.day) < (dob.month, dob.day))
-                dob_str = dob.strftime('%d %b %Y')
-            except Exception:
-                age_years = None
-                dob_str = "Unknown"
+    with st.container():
+        st.markdown("### " + playerInfo.get('name', ''))
+        # Compute DOB string and age safely (relative to transferDate)
+        try:
+            dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
+            age_years = transferDate.year - dob.year - ((transferDate.month, transferDate.day) < (dob.month, dob.day))
+            dob_str = dob.strftime('%d %b %Y')
+        except Exception:
+            age_years = None
+            dob_str = "Unknown"
 
-            colA, colB, colC, colD = st.columns([1, 2, 2, 2])
-            with colA:
-                crest = playerInfo.get('clubImage')
-                if crest:
-                    st.image(crest, use_container_width=False)
-            with colB:
-                country = playerInfo.get('citizensip1') or playerInfo.get('countryBirth', '')
-                st.markdown(f"**Country:** {country}")
-                st.markdown(f"**DOB / Age:** {dob_str} / {age_years if age_years is not None else '—'}")
-            with colC:
-                st.markdown(f"**Club:** {playerInfo.get('currentClub', '')}")
-                st.markdown(f"**League:** {playerInfo.get('currentLeague', '')}")
-            with colD:
-                st.markdown(f"**League country:** {playerInfo.get('currentLeagueCountry', '')}")
-                st.markdown(f"**Position:** {playerInfo.get('position', '')}")
+        colA, colB, colC, colD = st.columns([1, 2, 2, 2])
+        with colA:
+            crest = playerInfo.get('clubImage')
+            if crest:
+                st.image(crest, use_container_width=False)
+        with colB:
+            country = playerInfo.get('citizensip1') or playerInfo.get('countryBirth', '')
+            st.markdown(f"**Country:** {country}")
+            st.markdown(f"**DOB / Age:** {dob_str} / {age_years if age_years is not None else '—'}")
+        with colC:
+            st.markdown(f"**Club:** {playerInfo.get('currentClub', '')}")
+            st.markdown(f"**League:** {playerInfo.get('currentLeague', '')}")
+        with colD:
+            st.markdown(f"**League country:** {playerInfo.get('currentLeagueCountry', '')}")
+            st.markdown(f"**Position:** {playerInfo.get('position', '')}")
 
-        ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
-        # st.write(ntInfo)
-        # Show per-team metrics and table
-        for team in sorted(ntInfo['for'].unique()):
-            team_df = ntInfo[(ntInfo['for'] == team) & (ntInfo['competitionID'] != 'FS')].copy()
-            team_games = len(team_df)
-            player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
-            pct_played = (player_games / team_games * 100) if team_games else 0.0
+    ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
+    # st.write(ntInfo)
+    # Show per-team metrics and table
+    for team in sorted(ntInfo['for'].unique()):
+        team_df = ntInfo[(ntInfo['for'] == team) & (ntInfo['competitionID'] != 'FS')].copy()
+        team_games = len(team_df)
+        player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
+        pct_played = (player_games / team_games * 100) if team_games else 0.0
 
-            st.subheader(team)
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.metric("Competitive Team matches", team_games)
-            with col2:
-                st.metric("Player played", player_games)
-            with col3:
-                st.metric("% of competitive matches", f"{pct_played:.1f}%")
+        st.subheader(team)
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Competitive Team matches", team_games)
+        with col2:
+            st.metric("Player played", player_games)
+        with col3:
+            st.metric("% of competitive matches", f"{pct_played:.1f}%")
 
-            # st.table(team_df)
+        # st.table(team_df)
 
-  
+
         
         # transferDate
         # day month year 
