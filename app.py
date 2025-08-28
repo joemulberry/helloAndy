@@ -259,7 +259,7 @@ if st.session_state.authenticated:
         st.write(playerInfo)
 
     if playerInfo != None:
-        transferDate  = st.date_input("When is the proposed transfer?", date.today())
+        transferDate  = st.date_input("When is the proposed transfer?", date.today(),     min_value=date.today())
 
         # --- Age check callout (18+) ---
         try:
