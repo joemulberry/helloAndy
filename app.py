@@ -72,12 +72,14 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
             else:
                 d['played'] = False
 
+            d['table2'] = table2
+
             matches.append(d)
 
     allMatches += matches
 
     ntInfo = allMatches
-    ntInfo['table2'] = table2
+    ntInfo = table2
 
     return [ntInfo, nationalTeamURLSubSection]
         
