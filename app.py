@@ -288,7 +288,7 @@ if st.session_state.authenticated:
 
         # --- Player overview ---
         with st.container():
-            st.markdown("### Player overview")
+            st.markdown("###" + playerInfo.get('name', ''))
             # Compute DOB string and age safely (relative to transferDate)
             try:
                 dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
@@ -304,7 +304,6 @@ if st.session_state.authenticated:
                 if crest:
                     st.image(crest, caption=playerInfo.get('currentClub', ''), use_container_width=False)
             with colB:
-                st.markdown(f"**Name:** {playerInfo.get('name', '')}")
                 country = playerInfo.get('citizensip1') or playerInfo.get('countryBirth', '')
                 st.markdown(f"**Country:** {country}")
                 st.markdown(f"**DOB / Age:** {dob_str} / {age_years if age_years is not None else '—'}")
