@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, date
 import pandas as pd 
 from bs4 import BeautifulSoup
 from random import choice 
@@ -168,7 +168,7 @@ if st.session_state.authenticated:
         st.write(playerInfo)
 
     if playerInfo != None:
-        transferDate  = st.date_input("When is the proposed transfer?", datetime.date(2026, 1, 2))
+        transferDate  = st.date_input("When is the proposed transfer?", date(2026, 1, 2))
         st.write(transferDate)
 
     
