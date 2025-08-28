@@ -71,17 +71,26 @@ def getNationalTeam(playerURL, transferDate):
                             'for': cells[4].find('a')['title'],
                             'against': cells[6].text.strip(),
                             'result':cells[7].text.strip(),
-                            'minutesPlayed': int(cells[14].text.replace("'", ""))
                         }
                     
-                    if d['minutesPlayed'] > 0:
-                        d['played'] = True
-                    else:
-                        d['played'] = False
+                    
+                    if 'Not in Squad' not in row.text:
+                        d['minutesPlayed'] = int(cells[14].text.replace("'", ""))
 
-                    d['teamID'] = team['teamID']
-                    d['teamName'] = team['teamName']
-                    matches.append(d)
+                        if d['minutesPlayed'] > 0:
+                            d['played'] = True
+                        else:
+                            d['played'] = False
+
+                        d['teamID'] = team['teamID']
+                        d['teamName'] = team['teamName']
+                        matches.append(d)
+                    elif 'Not in squad' in row.text:
+                        d['played'] = False
+                        d['minutesPlayed'] = 0
+                        d['teamID'] = team['teamID']
+                        d['teamName'] = team['teamName']
+                        matches.append(d)
             
     
     allMatches += matches
