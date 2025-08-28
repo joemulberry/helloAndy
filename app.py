@@ -37,7 +37,7 @@ def getNationalTeam(playerURL, transferDate):
 
 #             d['table2'] = [option['value'] for option in table2]
 
-    teamOptions = [{'teamID': option['value'], 'teamName': option.text.strip()} for option in soup.find_all('table')[0].find_all('option')]
+    teamOptions = [{'teamID': str(option['value']), 'teamName': option.text.strip()} for option in soup.find_all('table')[0].find_all('option')]
 
     allMatches = []
     for team in teamOptions[0]:
