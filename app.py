@@ -40,6 +40,10 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
     soup = get_souped_page(nationalTeamURLSubSection)
 
     table = soup.find_all('table')[3]
+    tbody = table.find('tbody')
+
+
+    ntInfo = tbody
 
     return [table, nationalTeamURLSubSection]
         
@@ -206,7 +210,6 @@ if st.session_state.authenticated:
         transferDate  = st.date_input("When is the proposed transfer?", date.today())
         st.write(transferDate.month)
 
-        
         ntInfo, ntURL = getNationalTeam(playerURL, transferDate)
         st.write(ntInfo)
         st.write(ntURL)
