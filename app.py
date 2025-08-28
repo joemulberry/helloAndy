@@ -59,8 +59,8 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
                     'a' : cells[2].text,
                     'home/away': cells[3].text,
                     'for': cells[4].find('a')['title'],
-                    'against': cells[6].text,
-                    'result':cells[7].text,
+                    'against': cells[6].text.strip(),
+                    'result':cells[7].text.strip(),
                     'minutesPlayed': int(cells[14].text.replace("'", ""))
                 }
             
@@ -240,7 +240,7 @@ if st.session_state.authenticated:
         st.write(transferDate.month)
 
         ntInfo, ntURL = getNationalTeam(playerURL, transferDate)
-        st.write(ntInfo)
+        st.table(ntInfo)
         st.write(ntURL)
         
         # transferDate
