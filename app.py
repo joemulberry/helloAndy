@@ -81,7 +81,7 @@ def getNationalTeam(playerURL, transferDate):
                     not_in_squad = 'not in squad' in text_lower
                     injury = ('injury' in text_lower) or ('injured' in text_lower)
                     bench = ('bench' in text_lower) or ('on the bench' in text_lower)
-                    national = ('national team' in text_lower)
+                    national = 'national team' in text_lower
 
 
                     if not (not_in_squad or injury or bench or national):
