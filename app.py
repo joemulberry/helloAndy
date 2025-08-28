@@ -260,8 +260,12 @@ if st.session_state.authenticated:
     playerInfo = None
     if playerURL != "":
         playerInfo = parsePlayer(playerURL)
-        st.write(playerURL)
-        st.write(playerInfo)
+        # st.write(playerURL)
+        # st.write(playerInfo)
+
+        
+
+
 
     if playerInfo != None:
         # TODO add the min value for production
@@ -282,7 +286,34 @@ if st.session_state.authenticated:
         except Exception as e:
             st.warning(f"Could not determine age: {e}")
 
-        
+        # --- Player overview ---
+        with st.container():
+            st.markdown("### Player overview")
+            # Compute DOB string and age safely (relative to transferDate)
+            try:
+                dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
+                age_years = transferDate.year - dob.year - ((transferDate.month, transferDate.day) < (dob.month, dob.day))
+                dob_str = dob.strftime('%d %b %Y')
+            except Exception:
+                age_years = None
+                dob_str = "Unknown"
+
+            colA, colB, colC, colD = st.columns([1, 2, 2, 2])
+            with colA:
+                crest = playerInfo.get('clubImage')
+                if crest:
+                    st.image(crest, caption=playerInfo.get('currentClub', ''), use_column_width=False)
+            with colB:
+                st.markdown(f"**Name:** {playerInfo.get('name', '')}")
+                country = playerInfo.get('citizensip1') or playerInfo.get('countryBirth', '')
+                st.markdown(f"**Country:** {country}")
+                st.markdown(f"**DOB / Age:** {dob_str} / {age_years if age_years is not None else '—'}")
+            with colC:
+                st.markdown(f"**Club:** {playerInfo.get('currentClub', '')}")
+                st.markdown(f"**League:** {playerInfo.get('currentLeague', '')}")
+            with colD:
+                st.markdown(f"**League country:** {playerInfo.get('currentLeagueCountry', '')}")
+                st.markdown(f"**Position:** {playerInfo.get('position', '')}")
 
         ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
 
