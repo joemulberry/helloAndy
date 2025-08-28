@@ -291,6 +291,7 @@ if st.session_state.authenticated:
             except Exception as e:
                 st.warning(f"Could not determine age: {e}")
 
+    st.divider()
     # --- Player overview ---
     with st.container():
         st.markdown("### " + playerInfo.get('name', ''))
