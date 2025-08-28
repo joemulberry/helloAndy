@@ -207,7 +207,9 @@ if st.session_state.authenticated:
         st.write(transferDate.month)
 
         
-        st.write(getNationalTeam(playerURL, transferDate))
+        ntInfo, ntURL = getNationalTeam(playerURL, transferDate)
+        st.write(ntInfo)
+        st.write(ntURL)
         
         # transferDate
         # day month year 
