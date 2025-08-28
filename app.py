@@ -308,19 +308,15 @@ if st.session_state.authenticated:
 
         st.markdown(f"##### {playerInfo.get('name', '')} [{country}] ({age_years if age_years is not None else '—'} yrs)")
 
-        colA, colB, colC, colD = st.columns([1, 2, 2, 2])
+        colA, colB, colC = st.columns([1, 2, 2])
         with colA:
             crest = playerInfo.get('clubImage')
             if crest:
                 st.image(crest, use_container_width=False)
         with colB:
-            country = playerInfo.get('citizensip1') or playerInfo.get('countryBirth', '')
-            st.markdown(f"**Country:** {country}")
-            st.markdown(f"**DOB / Age:** {dob_str} / {age_years if age_years is not None else '—'}")
-        with colC:
             st.markdown(f"**Club:** {playerInfo.get('currentClub', '')}")
-            st.markdown(f"**League:** {playerInfo.get('currentLeague', '')}")
-        with colD:
+            st.markdown(f"**League:** {playerInfo.get('currentLeague', '')}")           
+        with colC:
             st.markdown(f"**League country:** {playerInfo.get('currentLeagueCountry', '')}")
             st.markdown(f"**Position:** {playerInfo.get('position', '')}")
 
