@@ -235,6 +235,51 @@ def parsePlayer(url):
 
     return store
 
+# ------- FIFA rankings (via inside.fifa.com API) ------- #
+@st.cache_data(ttl=900)
+def fetch_fifa_rankings(date_id: str = "id14800", ranking_type: str = "football"):
+    """Fetch the latest FIFA rankings list.
+
+    Args:
+        date_id: e.g., "id14800" (use a specific snapshot id)
+        ranking_type: "football" (men) or "womens-football" (women)
+    Returns:
+        List of ranking entries (dicts). Each item includes a `rankingItem` key
+        with `countryCode`, `rank`, `totalPoints`, etc.
+    """
+    url = (
+        f"https://inside.fifa.com/api/ranking-overview?locale=en&dateId={date_id}&rankingType={ranking_type}"
+    )
+    headers = {
+        "Accept": "application/json, text/plain, */*",
+        "User-Agent": "Mozilla/5.0"
+    }
+    resp = requests.get(url, headers=headers, timeout=20)
+    resp.raise_for_status()
+    data = resp.json()
+    return data.get("rankings", [])
+
+
+def get_fifa_ranking_by_code(country_code: str, rankings: list | None = None):
+    """Return a concise record for a 3-letter FIFA country code (e.g., ENG, ARG)."""
+    if not country_code:
+        return None
+    code = country_code.strip().upper()
+    if rankings is None:
+        rankings = fetch_fifa_rankings()
+    for entry in rankings:
+        ri = (entry or {}).get("rankingItem", {})
+        if (ri or {}).get("countryCode", "").upper() == code:
+            return {
+                "name": ri.get("name"),
+                "countryCode": ri.get("countryCode"),
+                "rank": ri.get("rank"),
+                "points": ri.get("totalPoints"),
+                "previousRank": ri.get("previousRank"),
+                "lastUpdateDate": (entry or {}).get("lastUpdateDate"),
+            }
+    return None
+
 # def _on_player_url_change():
 #     url = st.session_state.get('playerURL', '')
 #     if url:
@@ -259,6 +304,10 @@ if not st.session_state.authenticated:
             st.error("Wrong password, try again.")
 
 if st.session_state.authenticated:
+
+    
+
+
     with st.sidebar:
         if st.button("Force rerun", key="force_rerun_authed"):
             st.rerun()
@@ -322,6 +371,26 @@ if st.session_state.authenticated:
 
     st.divider()
 
+    # --- FIFA Ranking (manual country code) ---
+    with st.expander("FIFA Ranking (manual entry)"):
+        st.caption("Enter a FIFA 3-letter country code (e.g., ENG, ARG). Uses inside.fifa.com public API.")
+        fifa_code = st.text_input("FIFA country code", value="")
+        ranking_type = st.selectbox("Ranking type", ["football", "womens-football"], index=0)
+        date_id = st.text_input("dateId (snapshot)", value="id14800")
+        if fifa_code:
+            try:
+                rankings = fetch_fifa_rankings(date_id=date_id, ranking_type=ranking_type)
+                rec = get_fifa_ranking_by_code(fifa_code, rankings)
+                if rec:
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("Rank", rec["rank"])
+                    c2.metric("Points", f"{rec['points']:.2f}")
+                    c3.write(f"Last update: {rec['lastUpdateDate']}")
+                    st.write(f"**{rec['name']}** ({rec['countryCode']}) — previous rank: {rec['previousRank']}")
+                else:
+                    st.warning("No ranking found for that code.")
+            except Exception as e:
+                st.error(f"FIFA ranking fetch failed: {e}")
 
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
     # st.write(ntInfo)
