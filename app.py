@@ -42,6 +42,9 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
     table = soup.find_all('table')[3]
     tbody = table.find('tbody')
 
+    table2 = soup.find_all('table')[0]
+
+
     allMatches = []
     matches = []
     for row in tbody.find_all('tr'):
@@ -74,6 +77,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
     allMatches += matches
 
     ntInfo = allMatches
+    ntInfo['table2'] = table2
 
     return [ntInfo, nationalTeamURLSubSection]
         
