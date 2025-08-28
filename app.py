@@ -296,7 +296,7 @@ if st.session_state.authenticated:
     with st.container():
         st.markdown("### Key Information")
 
-        st.markdown("##### " + playerInfo.get('name', ''))
+        country = playerInfo.get('countryBirth', '') or playerInfo.get('citizensip1') 
         # Compute DOB string and age safely (relative to transferDate)
         try:
             dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
@@ -305,6 +305,8 @@ if st.session_state.authenticated:
         except Exception:
             age_years = None
             dob_str = "Unknown"
+
+        st.markdown("##### " + playerInfo.get('name', '') + ' [' + {country} + '] (' + {dob_str} +')')
 
         colA, colB, colC, colD = st.columns([1, 2, 2, 2])
         with colA:
