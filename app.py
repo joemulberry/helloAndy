@@ -45,7 +45,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
     allMatches = []
     matches = []
     for row in tbody.find_all('tr'):
-        if len(row.find_all('td') == 2):
+        if len(row.find_all('td')) == 2:
             if len(matches) > 0:
                 allMatches += matches
             section = row.find_all('td')[0].find('a')['alt']
