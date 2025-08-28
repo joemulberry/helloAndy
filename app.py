@@ -48,7 +48,7 @@ def getNationalTeam(playerURL, transferDate):
         part2 = '&ende=' + date.today().strftime("%d.%m.%Y") + '&nurEinsatz=0'
         nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
         soup2 = get_souped_page(nationalTeamURLSubSection)
-
+        print(nationalTeamURLSubSection)
         if len(soup2.find_all('table')) >= 3:
             table = soup2.find_all('table')[3]
             tbody = table.find('tbody')
