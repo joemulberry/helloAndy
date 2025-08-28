@@ -49,46 +49,46 @@ def getNationalTeam(playerURL, transferDate):
         nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
         soup2 = get_souped_page(nationalTeamURLSubSection)
 
-        table = soup2.find_all('table')[3]
-        tbody = table.find('tbody')
+        if len(soup2.find_all('table')) <= 3:
+            table = soup2.find_all('table')[3]
+            tbody = table.find('tbody')
 
+            matches = []
+            for row in tbody.find_all('tr'):
+                if len(row.find_all('td')) == 2:
+                    if len(matches) > 0:
+                        allMatches += matches
+                    competition = row.find_all('td')[0].find('img')['title']
+                    competitionID = row.find_all('td')[0].find('a')['name']
+                    matches = []
+                else: 
+                    cells = row.find_all('td')
+                    d = {
+                            'competition': competition,
+                            'competitionID': competitionID,
+                            'a' : cells[2].text,
+                            'home/away': cells[3].text,
+                            'for': cells[4].find('a')['title'],
+                            'against': cells[6].text.strip(),
+                            'result':cells[7].text.strip(),
+                            'minutesPlayed': int(cells[14].text.replace("'", ""))
+                        }
+                    
+                    if d['minutesPlayed'] > 0:
+                        d['played'] = True
+                    else:
+                        d['played'] = False
 
-        matches = []
-        for row in tbody.find_all('tr'):
-            if len(row.find_all('td')) == 2:
-                if len(matches) > 0:
-                    allMatches += matches
-                competition = row.find_all('td')[0].find('img')['title']
-                competitionID = row.find_all('td')[0].find('a')['name']
-                matches = []
-            else: 
-                cells = row.find_all('td')
-                d = {
-                        'competition': competition,
-                        'competitionID': competitionID,
-                        'a' : cells[2].text,
-                        'home/away': cells[3].text,
-                        'for': cells[4].find('a')['title'],
-                        'against': cells[6].text.strip(),
-                        'result':cells[7].text.strip(),
-                        'minutesPlayed': int(cells[14].text.replace("'", ""))
-                    }
-                
-                if d['minutesPlayed'] > 0:
-                    d['played'] = True
-                else:
-                    d['played'] = False
-
-                d['teamID'] = team['teamID']
-                d['teamName'] = team['teamName']
-                matches.append(d)
-        
+                    d['teamID'] = team['teamID']
+                    d['teamName'] = team['teamName']
+                    matches.append(d)
+            
     
     allMatches += matches
     ntInfo = allMatches
     # ntInfo = teamOptions
 
-    return [soup2, 'nationalTeamURLSubSection']
+    return [ntInfo, 'nationalTeamURLSubSection']
             
 
 # ------- undected scrap for Transfermarkt -------- #
