@@ -291,7 +291,7 @@ if st.session_state.authenticated:
             except Exception as e:
                 st.warning(f"Could not determine age: {e}")
 
-        # --- Player overview ---
+    # --- Player overview ---
     with st.container():
         st.markdown("### " + playerInfo.get('name', ''))
         # Compute DOB string and age safely (relative to transferDate)
@@ -339,7 +339,7 @@ if st.session_state.authenticated:
 
         # st.table(team_df)
 
-
+  
         
         # transferDate
         # day month year 
