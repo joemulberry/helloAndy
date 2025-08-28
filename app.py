@@ -45,7 +45,7 @@ def getNationalTeam(playerURL, transferDate):
         part1 =  '/verein_id/' + team['teamID'] + '/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
         startDate_date = subtract_years(transferDate, 2)
         startDate = startDate_date.strftime("%d.%m.%Y")
-        part2 = '&ende=' + startDate.strftime("%d.%m.%Y") + '&nurEinsatz=0'
+        part2 = '&ende=' + transferDate.strftime("%d.%m.%Y") + '&nurEinsatz=0'
         nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
         soup2 = get_souped_page(nationalTeamURLSubSection)
         print(nationalTeamURLSubSection)
