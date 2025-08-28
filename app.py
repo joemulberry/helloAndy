@@ -49,7 +49,7 @@ def getNationalTeam(playerURL, transferDate):
         nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
         soup2 = get_souped_page(nationalTeamURLSubSection)
 
-        table = soup2.find_all('table')[2]
+        table = soup2.find_all('table')[1]
         tbody = table.find('tbody')
 
 
