@@ -97,7 +97,7 @@ def getNationalTeam(playerURL, transferDate):
     ntInfo = allMatches
     # ntInfo = teamOptions
 
-    return [ntInfo, 'nationalTeamURLSubSection']
+    return ntInfo
             
 
 # ------- undected scrap for Transfermarkt -------- #
@@ -262,9 +262,12 @@ if st.session_state.authenticated:
         transferDate  = st.date_input("When is the proposed transfer?", date.today())
         st.write(transferDate.month)
 
-        ntInfo, ntURL = getNationalTeam(playerURL, transferDate)
-        st.table(ntInfo)
-        st.write(ntURL)
+        ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
+
+        for team in list(set(ntInfo['for'])):
+            st.text(team)
+            st.table(ntInfo[ntInfo['for'] == team])
+  
         
         # transferDate
         # day month year 
