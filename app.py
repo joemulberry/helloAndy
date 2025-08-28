@@ -40,7 +40,7 @@ def getNationalTeam(playerURL, transferDate):
     teamOptions = [{'teamID': option['value'], 'teamName': option.text.strip()} for option in soup.find_all('table')[0].find_all('option')]
 
     allMatches = []
-    for team in teamOptions:
+    for team in teamOptions[0]:
 
         part1 =  '/verein_id/' + str(team['teamID']) + '/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
         startDate_date = subtract_years(transferDate, 2)
@@ -49,7 +49,7 @@ def getNationalTeam(playerURL, transferDate):
         nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
         soup2 = get_souped_page(nationalTeamURLSubSection)
 
-        table = soup2.find_all('table')[1]
+        table = soup2.find_all('table')[3]
         tbody = table.find('tbody')
 
 
