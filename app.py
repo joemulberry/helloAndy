@@ -261,7 +261,7 @@ if st.session_state.authenticated:
     if playerURL != "":
         playerInfo = parsePlayer(playerURL)
         # st.write(playerURL)
-        # st.write(playerInfo)
+        st.write(playerInfo)
 
         
 
