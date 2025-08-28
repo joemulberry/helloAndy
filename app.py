@@ -45,7 +45,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
 
     ntInfo = tbody
 
-    return [table, nationalTeamURLSubSection]
+    return [ntInfo, nationalTeamURLSubSection]
         
 
 # ------- undected scrap for Transfermarkt -------- #
