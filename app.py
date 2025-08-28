@@ -5,6 +5,14 @@ from bs4 import BeautifulSoup
 from random import choice 
 import requests 
 
+def subtract_years(d, years):
+    """Return a date `years` earlier than d, handling Feb 29 safely."""
+    try:
+        return d.replace(year=d.year - years)
+    except ValueError:
+        # Handle Feb 29 -> Feb 28 on non-leap years
+        return d.replace(month=2, day=28, year=d.year - years)
+
 
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
@@ -168,15 +176,17 @@ if st.session_state.authenticated:
         st.write(playerInfo)
 
     if playerInfo != None:
-        transferDate  = st.date_input("When is the proposed transfer?", date(2026, 1, 2))
+        transferDate  = st.date_input("When is the proposed transfer?", date.today())
         st.write(transferDate.month)
 
         nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
         part1 =  '/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
-        startDate = str(transferDate.day) + '.' + str(transferDate.month) + '.' + str(transferDate.year) 
+        startDate_date = subtract_years(transferDate, 2)
+        startDate = startDate_date.strftime("%d.%m.%Y")
         part2 =  '&ende=27.08.2025&nurEinsatz=0'
-        
         st.write(nationalTeamURL + part1 + startDate + part2)
+        
+        
         # transferDate
         # day month year 
         # soupNationalTeam = get_souped_page(nationalTeamURL)
