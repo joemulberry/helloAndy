@@ -49,7 +49,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
             if len(matches) > 0:
                 allMatches += matches
             section = row.find_all('td')[0].find('img')['title']
-            # section = row.find_all('td')[0]
+            section = row.find_all('td')[0]
             matches = []
         else: 
             cells = row.find_all('td')
