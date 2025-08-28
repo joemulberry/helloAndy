@@ -18,6 +18,19 @@ st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="cente
 
 
 def getNationalTeam(playerURL, transferDate, teamID = '20796'):
+    
+    def get_souped_page(page_url):
+        headers_list = [
+            {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15'},
+            {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+        ]
+        headers = choice(headers_list)
+        pageTree = requests.get(page_url, headers=headers)
+        pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
+        return(pageSoup)
+
+
     nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
     part1 =  '/verein_id/' + str(teamID) + '/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
     startDate_date = subtract_years(transferDate, 2)
@@ -28,7 +41,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
 
     table = soup.find_all('table')
 
-    return table 
+    return [table, nationalTeamURLSubSection]
         
 
 # ------- undected scrap for Transfermarkt -------- #
@@ -193,6 +206,7 @@ if st.session_state.authenticated:
         transferDate  = st.date_input("When is the proposed transfer?", date.today())
         st.write(transferDate.month)
 
+        
         st.write(getNationalTeam(playerURL, transferDate))
         
         # transferDate
