@@ -57,7 +57,8 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
                 {
                     'competition': competition,
                     'competitionID': competitionID,
-                    'a' : cells[2].text
+                    'a' : cells[2].text,
+                    'cells':cells
                 }
             )
 
