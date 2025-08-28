@@ -321,10 +321,10 @@ if st.session_state.authenticated:
                 st.markdown(f"**Position:** {playerInfo.get('position', '')}")
 
         ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
-        st.write(ntInfo)
+        # st.write(ntInfo)
         # Show per-team metrics and table
         for team in sorted(ntInfo['for'].unique()):
-            team_df = ntInfo[ntInfo['for'] == team].copy()
+            team_df = ntInfo[(ntInfo['for'] == team) & (ntInfo['competitionID'] != 'FS')].copy()
             team_games = len(team_df)
             player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
             pct_played = (player_games / team_games * 100) if team_games else 0.0
@@ -332,11 +332,11 @@ if st.session_state.authenticated:
             st.subheader(team)
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.metric("Team matches", team_games)
+                st.metric("Competitive Team matches", team_games)
             with col2:
                 st.metric("Player played", player_games)
             with col3:
-                st.metric("% of team matches", f"{pct_played:.1f}%")
+                st.metric("% of competitive matches", f"{pct_played:.1f}%")
 
             # st.table(team_df)
 
