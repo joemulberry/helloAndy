@@ -72,7 +72,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
             else:
                 d['played'] = False
 
-            d['table2'] = [option['value'] for option in table2.find_all('options')]
+            d['table2'] = [option['value'] for option in table2.find_all('option')]
 
             matches.append(d)
 
