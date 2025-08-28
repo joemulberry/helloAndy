@@ -294,7 +294,7 @@ if st.session_state.authenticated:
     st.divider()
     # --- Player overview ---
     with st.container():
-        st.markdown("## Key Information")
+        st.markdown("### Key Information")
 
         st.markdown("##### " + playerInfo.get('name', ''))
         # Compute DOB string and age safely (relative to transferDate)
@@ -321,6 +321,9 @@ if st.session_state.authenticated:
         with colD:
             st.markdown(f"**League country:** {playerInfo.get('currentLeagueCountry', '')}")
             st.markdown(f"**Position:** {playerInfo.get('position', '')}")
+
+    st.divider()
+
 
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
     # st.write(ntInfo)
