@@ -321,7 +321,7 @@ if st.session_state.authenticated:
                 st.markdown(f"**Position:** {playerInfo.get('position', '')}")
 
         ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
-
+        st.write(ntInfo)
         # Show per-team metrics and table
         for team in sorted(ntInfo['for'].unique()):
             team_df = ntInfo[ntInfo['for'] == team].copy()
