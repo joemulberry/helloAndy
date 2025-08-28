@@ -294,7 +294,9 @@ if st.session_state.authenticated:
     st.divider()
     # --- Player overview ---
     with st.container():
-        st.markdown("### " + playerInfo.get('name', ''))
+        st.markdown("### Key Information")
+
+        st.markdown("##### " + playerInfo.get('name', ''))
         # Compute DOB string and age safely (relative to transferDate)
         try:
             dob = date(playerInfo['yearBirth'], playerInfo['monthBirth'], playerInfo['dayBirth'])
