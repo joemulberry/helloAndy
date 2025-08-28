@@ -61,7 +61,7 @@ def getNationalTeam(playerURL, transferDate, teamID = '20796'):
                     'for': cells[4].find('a')['title'],
                     'against': cells[6].text,
                     'result':cells[7].text,
-                    'minutesPlayed': int(cells[14].text)
+                    'minutesPlayed': int(cells[14].text.replace("'", ""))
                 }
             
             if d['minutesPlayed'] > 0:
