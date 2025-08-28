@@ -262,7 +262,7 @@ if st.session_state.authenticated:
             st.rerun()
     st.title('GBE/ESC Checker')
 
-    playerURL = st.text_input("Player's Transfermarkt Profile url", value="")
+    playerURL = st.text_input("Player's Transfermarkt Profile URL", value="")
     playerInfo = None
     if playerURL != "":
         playerInfo = parsePlayer(playerURL)
