@@ -264,7 +264,7 @@ if st.session_state.authenticated:
             st.rerun()
     st.title('GBE/ESC Checker')
 
-    with st.expander("Settings (player url, date of transfer, etc)", expanded=True):
+    with st.expander("Settings", expanded=True):
         playerURL = st.text_input("Player's Transfermarkt Profile URL", value="")
         playerInfo = None
         if playerURL != "":
