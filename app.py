@@ -87,7 +87,7 @@ def getNationalTeam(playerURL, transferDate):
                         d['teamID'] = team['teamID']
                         d['teamName'] = team['teamName']
                         matches.append(d)
-                    elif 'Not in squad' in row.text:
+                    else:
                         d['played'] = False
                         d['minutesPlayed'] = 0
                         d['teamID'] = team['teamID']
