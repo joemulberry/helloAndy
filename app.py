@@ -172,9 +172,11 @@ if st.session_state.authenticated:
         st.write(transferDate.month)
 
         nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
-        # '/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
-        # '&ende=27.08.2025&nurEinsatz=0'
-        st.write(nationalTeamURL)
+        part1 =  '/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=' 
+        startDate = str(transferDate.day) + '.' + str(transferDate.month) + '.' + str(transferDate.year) 
+        part2 =  '&ende=27.08.2025&nurEinsatz=0'
+        
+        st.write(nationalTeamURL + part1 + startDate + part2)
         # transferDate
         # day month year 
         # soupNationalTeam = get_souped_page(nationalTeamURL)
