@@ -365,13 +365,13 @@ if st.session_state.authenticated:
             else:
                 st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the 30% threshold for a team ranked between 1-10 [ {average_rank} ]")
         elif rank >50:
-            st.error(f"AUTO-PASS FAIL: The player's senior national team rank [{rank}] is below the auto-pass threshold of 50. Therefore the auto-pass criteria has not been met")
+            st.error(f"AUTO-PASS FAIL: {final_teams[0]}'s FIFA Raking [{rank}] is below the auto-pass threshold of 50. Therefore the auto-pass criteria has not been met")
 
         else:
             st.warning(f"RANK UNDER CONSTRUCTION")
 
     else:
-        st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams}'s national team. Therefore the auto-pass criteria has not been met")
+        st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met")
 
 
 # FIFA World Ranking of National Team
