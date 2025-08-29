@@ -357,7 +357,7 @@ if st.session_state.authenticated:
     final_teams = [team for team in unique_teams if all(item not in team for item in items)]
     # st.write(final_teams)
 
-    internationalPoints = 0 
+    d = {'internationalPoints' : 0 }
 
     if len(final_teams) > 0:
         x = fetch_fifa_rankings_timeseries(final_teams[0])
@@ -369,7 +369,7 @@ if st.session_state.authenticated:
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
 
-        internationalPoints = international_appearance_points(rank,pct_played)
+        d['internationalPoints'] = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
 
