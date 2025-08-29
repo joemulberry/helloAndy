@@ -93,6 +93,7 @@ def getNationalTeam(playerURL, transferDate):
                     if not (not_in_squad or injury or bench or 
                             national or noInfo or muscularProblems or 
                             ligamentInjury or adductorPain):
+                        print(cells)
                         d['minutesPlayed'] = int(cells[14].text.replace("'", ""))
 
                         if d['minutesPlayed'] > 0:
