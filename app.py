@@ -425,7 +425,7 @@ if st.session_state.authenticated:
         st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met")
 
 
-    st.write('international points', dd)
+    st.write('international points', dd['internationalPoints'])
 
 
         # if 
