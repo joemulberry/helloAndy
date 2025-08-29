@@ -217,15 +217,16 @@ def parsePlayer(url):
                 store['leagueTier'] = 5           
 
         if 'Contract expires:' in label.text:
-            items = label.text.split(':')[1].split('(')[0].strip().split('.')
-            store['dayContractExpires'] = int(items[0])
-            store['monthContractExpires'] = int(items[1])
-            store['yearContractExpires'] = int(items[2])
-            contract_date = datetime(store['yearContractExpires'], store['monthContractExpires'], store['dayContractExpires'])
-            today = datetime.today()
-            delta = contract_date - today
-            store['daysUntilContractExpires'] = delta.days
-            store['monthsUntilContractExpires'] = (contract_date.year - today.year) * 12 + (contract_date.month - today.month)
+            if label.text.split(':')[1] != '-':
+                items = label.text.split(':')[1].split('(')[0].strip().split('.')
+                store['dayContractExpires'] = int(items[0])
+                store['monthContractExpires'] = int(items[1])
+                store['yearContractExpires'] = int(items[2])
+                contract_date = datetime(store['yearContractExpires'], store['monthContractExpires'], store['dayContractExpires'])
+                today = datetime.today()
+                delta = contract_date - today
+                store['daysUntilContractExpires'] = delta.days
+                store['monthsUntilContractExpires'] = (contract_date.year - today.year) * 12 + (contract_date.month - today.month)
 
         if 'League level' in label.text:
             store['currentLeagueCountry'] = label.find('img')['title']
