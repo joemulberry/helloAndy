@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from random import choice 
 import requests 
 
+from internationalMatches import international_appearance_points
 from fifaPull import fetch_fifa_rankings_timeseries, average_rank
 
 def subtract_years(d, years):
@@ -357,14 +358,19 @@ if st.session_state.authenticated:
     final_teams = [team for team in unique_teams if all(item not in team for item in items)]
     # st.write(final_teams)
 
+    internationalPoints = 0 
+
     if len(final_teams) > 0:
         x = fetch_fifa_rankings_timeseries(final_teams[0])
         rank = average_rank(x)
+
 
         team_df = ntInfo[(ntInfo['for'] == final_teams[0]) & (ntInfo['competitionID'] != 'FS')].copy()
         team_games = len(team_df)
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
+
+        internationalPoints = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
 
@@ -415,6 +421,7 @@ if st.session_state.authenticated:
         st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met")
 
 
+    st.write('international points', internationalPoints)
 
 
 
