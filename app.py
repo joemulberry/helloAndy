@@ -99,10 +99,15 @@ if st.session_state.authenticated:
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
     items = ['U21', 'U19', 'U18']
     unique_teams = list(ntInfo['for'].unique())
-    seniorNationalTeam = [team for team in unique_teams if all(item not in team for item in items)][0]
-    ntInfo[ntInfo['for'] == seniorNationalTeam].reset_index().iloc[0]['for']
-    st.write(seniorNationalTeam)
-    st.write(ntInfo)
+    seniorNationalTeam = [team for team in unique_teams if all(item not in team for item in items)]
+    if len(seniorNationalTeam) >0:
+        seniorNationalTeamID = ntInfo[ntInfo['for'] == seniorNationalTeam[0]].reset_index().iloc[0]['teamID']
+    else: 
+        seniorNationalTeamID = None
+        seniorNationalTeam = None
+
+    st.write(seniorNationalTeam, seniorNationalTeamID)
+    # st.write(ntInfo)
     # st.write(ntInfo)
     # items = ['U21', 'U19', 'U18']
     # unique_teams = list(ntInfo['for'].unique())
