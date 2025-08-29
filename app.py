@@ -141,8 +141,8 @@ if st.session_state.authenticated:
                     'date' : cells[headers_.index('Date')].text.strip().split(' ')[1],
                     'home/away': cells[headers_.index('Venue')].text.strip(),
                     'for': seniorNationalTeam,
-                    'against': cells[headers_.index('Opponent')].text.strip(),
-                    'result':cells[headers_.index('Result')].text.strip(),  
+                    'against': cells[headers_.index('Opponent')+1].text.strip(),
+                    'result':cells[headers_.index('Result')+1].text.strip(),  
                 }
                 matches.append(match)
 
