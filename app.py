@@ -80,6 +80,7 @@ def getNationalTeam(playerURL, transferDate):
                     
                     # Treat not in squad, injuries, or bench listings as not played
                     text_lower = row.text.lower()
+                    print(text_lower)
                     not_in_squad = 'not in squad' in text_lower
                     injury = ('injury' in text_lower) or ('injured' in text_lower)
                     bench = ('bench' in text_lower) or ('on the bench' in text_lower)
@@ -93,7 +94,6 @@ def getNationalTeam(playerURL, transferDate):
                     if not (not_in_squad or injury or bench or 
                             national or noInfo or muscularProblems or 
                             ligamentInjury or adductorPain):
-                        print(cells)
                         d['minutesPlayed'] = int(cells[14].text.replace("'", ""))
 
                         if d['minutesPlayed'] > 0:
