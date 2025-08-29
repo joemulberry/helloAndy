@@ -114,7 +114,7 @@ if st.session_state.authenticated:
         today_year = date.today().year
         years = [today_year - 2, today_year - 1, today_year]
         
-        year = years 
+        year = years[0] 
         seniorURL = 'https://www.transfermarkt.co.uk/' + seniorNationalTeam + '/spielplan/verein/' + seniorNationalTeamID + '/plus/0?saison_id=' + str(year)
         st.write(seniorURL)
 
