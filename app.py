@@ -359,11 +359,10 @@ if st.session_state.authenticated:
 
     dd = {'internationalPoints' : 0 }
     st.write({"nt_rows": len(ntInfo), "unique_teams": ntInfo['for'].unique().tolist(), "final_teams": final_teams})
+    
     if len(final_teams) > 0:
         x = fetch_fifa_rankings_timeseries(final_teams[0])
         rank = average_rank(x)
-
-
         team_df = ntInfo[(ntInfo['for'] == final_teams[0]) & (ntInfo['competitionID'] != 'FS')].copy()
         team_games = len(team_df)
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
@@ -371,12 +370,12 @@ if st.session_state.authenticated:
         
         st.write(international_appearance_points(rank, pct_played))
 
-        print('FUNCTION TRIGGERED')
-        try:
-            dd["internationalPoints"] = international_appearance_points(rank, pct_played)
-        except Exception as e:
-            st.error(f"international_appearance_points failed: {e}")
-            # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
+        # print('FUNCTION TRIGGERED')
+        # try:
+        #     dd["internationalPoints"] = international_appearance_points(rank, pct_played)
+        # except Exception as e:
+        #     st.error(f"international_appearance_points failed: {e}")
+        #     # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
 
@@ -427,6 +426,7 @@ if st.session_state.authenticated:
         st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met")
 
 
+    st.write(international_appearance_points(rank, pct_played))
     st.write('international points', dd)
 
 
