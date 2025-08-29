@@ -369,6 +369,7 @@ if st.session_state.authenticated:
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
         
+        st.write(international_appearance_points(rank, pct_played))
 
         print('FUNCTION TRIGGERED')
         try:
