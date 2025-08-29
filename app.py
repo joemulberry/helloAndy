@@ -368,11 +368,10 @@ if st.session_state.authenticated:
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
         
-        st.write(international_appearance_points(rank, pct_played))
 
         # print('FUNCTION TRIGGERED')
         # try:
-        #     dd["internationalPoints"] = international_appearance_points(rank, pct_played)
+        dd["internationalPoints"] = international_appearance_points(rank, pct_played)
         # except Exception as e:
         #     st.error(f"international_appearance_points failed: {e}")
         #     # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
