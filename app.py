@@ -136,11 +136,11 @@ if st.session_state.authenticated:
             match = {
                 'competition': competitionName,
                 'competitionID': competitionID,
-                'date' : cells[1].text.strip().split(' ')[1],
-                'home/away': cells[3].text.strip(),
+                'date' : cells[0].text.strip().split(' ')[1],
+                'home/away': cells[2].text.strip(),
                 # 'for': cells[5].find('a')['alt'],
-                'against': cells[6].text.strip(),
-                # 'result':cells[10].text.strip(),  
+                'against': cells[5].text.strip(),
+                'result':cells[9].text.strip(),  
             }
             matches.append(match)
 
