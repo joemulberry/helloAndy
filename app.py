@@ -130,6 +130,8 @@ if st.session_state.authenticated:
             competitionName = box.find('h2').text.strip()
             competitionID = box.find('h2').find('a')['name']
 
+            headers_ = [th.text for td in box.find('thead').find_all('th')]
+
             for row in box.find('tbody').find_all('tr'):
                 cells = row.find_all('td')
                 
@@ -149,6 +151,7 @@ if st.session_state.authenticated:
         see['2'] = box
         see['3'] = competitionID
         see['matches'] = matches
+        see['headers'] = headers_
 
 
  
