@@ -140,7 +140,7 @@ if st.session_state.authenticated:
                 'home/away': cells[3].text.strip(),
                 # 'for': cells[5].find('a')['alt'],
                 'against': cells[6].text.strip(),
-                'result':cells[10].text.strip(),  
+                # 'result':cells[10].text.strip(),  
             }
             matches.append(match)
 
