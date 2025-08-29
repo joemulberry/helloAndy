@@ -143,13 +143,12 @@ if st.session_state.authenticated:
                     'for': seniorNationalTeam,
                     'against': cells[headers_.index('Opponent')+1].text.strip(),
                     'result':cells[headers_.index('Result')+1].text.strip(),  
+                    'year': year
                 }
                 matches.append(match)
 
 
-        see[''] = competitionName
-        see['2'] = box
-        see['3'] = competitionID
+
         see['matches'] = matches
 
 
