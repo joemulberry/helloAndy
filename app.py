@@ -341,13 +341,16 @@ if st.session_state.authenticated:
         # with col3:
         #     st.metric("% of competitive matches", f"{pct_played:.1f}%")
 
-    st.write(ntInfo['for'][0])
     items = ['U21', 'U19', 'U18']
-    if all(item not in sorted(ntInfo['for'].unique()) for item in items):  
-        x = fetch_fifa_rankings_timeseries(ntInfo['for'][0])
+    unique_teams = list(ntInfo['for'].unique())
+    final_teams = [team for team in unique_teams if all(item not in team for item in items)]
+    st.write(final_teams)
+
+    if len(final_teams) > 0:
+        x = fetch_fifa_rankings_timeseries(final_teams[0])
         rank = average_rank(x)
 
-        team_df = ntInfo[(ntInfo['for'] == ntInfo['for'][0]) & (ntInfo['competitionID'] != 'FS')].copy()
+        team_df = ntInfo[(ntInfo['for'] == final_teams[0]) & (ntInfo['competitionID'] != 'FS')].copy()
         team_games = len(team_df)
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
@@ -368,7 +371,7 @@ if st.session_state.authenticated:
             st.warning(f"RANK UNDER CONSTRUCTION")
 
     else:
-        st.error(f"AUTO-PASS FAIL: The player has not played for their senior national team. Therefore the auto-pass criteria has not been met")
+        st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams}'s national team. Therefore the auto-pass criteria has not been met")
 
 
 # FIFA World Ranking of National Team
