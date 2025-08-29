@@ -97,7 +97,7 @@ if st.session_state.authenticated:
 
   
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
-
+    st.write(ntInfo)
     items = ['U21', 'U19', 'U18']
     unique_teams = list(ntInfo['for'].unique())
     final_teams = [team for team in unique_teams if all(item not in team for item in items)]
