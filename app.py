@@ -85,7 +85,7 @@ if st.session_state.authenticated:
         with colA:
             crest = playerInfo.get('clubImage')
             if crest:
-                st.image(crest, use_container_width=False)
+                st.image(crest, width='content')
         with colB:
             st.markdown(f"**Club:** {playerInfo.get('currentClub', '')}")
             st.markdown(f"**League:** {playerInfo.get('currentLeague', '')}")           
@@ -136,10 +136,10 @@ if st.session_state.authenticated:
         st.badge("Auto-Pass Obtained", icon=":material/check:", color="green")
         st.text(autoPassText)
     elif autoPassText == 2:
-        st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
+        # st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
         st.text(autoPassText)
     else: 
-        st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
+        # st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
         st.text(autoPassText)
     st.write(autoPassResult, autoPassText)
 
