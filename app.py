@@ -124,7 +124,7 @@ if st.session_state.authenticated:
             seniorSoup = get_souped_page(seniorURL)
 
             boxes = seniorSoup.find_all('div', class_='box')[2::]
-
+            st.write(boxes)
 
             for box in boxes:
             
