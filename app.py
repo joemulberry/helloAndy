@@ -378,7 +378,7 @@ if st.session_state.authenticated:
 
 
 
-        if 
+        # if 
 
         # st.table(team_df)
 
