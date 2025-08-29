@@ -344,7 +344,7 @@ if st.session_state.authenticated:
     items = ['U21', 'U19', 'U18']
     unique_teams = list(ntInfo['for'].unique())
     final_teams = [team for team in unique_teams if all(item not in team for item in items)]
-    st.write(final_teams)
+    # st.write(final_teams)
 
     if len(final_teams) > 0:
         x = fetch_fifa_rankings_timeseries(final_teams[0])
