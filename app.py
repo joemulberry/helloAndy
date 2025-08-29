@@ -217,7 +217,7 @@ def parsePlayer(url):
                 store['leagueTier'] = 5           
 
         if 'Contract expires:' in label.text:
-            if label.text.split(':')[1] != '-':
+            if '-' not in label.text.split(':')[1]:
                 items = label.text.split(':')[1].split('(')[0].strip().split('.')
                 store['dayContractExpires'] = int(items[0])
                 store['monthContractExpires'] = int(items[1])
