@@ -113,6 +113,7 @@ if st.session_state.authenticated:
     st.write(today_year)
     seniorURL = 'https://www.transfermarkt.co.uk/england/spielplan/verein/3299/plus/0?saison_id=2024'
 
+
     # st.write(ntInfo)
     # st.write(ntInfo)
     # items = ['U21', 'U19', 'U18']
