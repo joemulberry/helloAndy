@@ -364,7 +364,7 @@ if st.session_state.authenticated:
         team_df = ntInfo[(ntInfo['for'] == final_teams[0]) & (ntInfo['competitionID'] != 'FS')].copy()
         team_games = len(team_df)
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
-        pct_played = (player_games / team_games) if team_games else 0.0
+        pct_played = round((player_games / team_games),1) if team_games else 0.0
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
 
