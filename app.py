@@ -371,7 +371,11 @@ if st.session_state.authenticated:
         
 
         print('FUNCTION TRIGGERED')
-        dd['internationalPoints'] = international_appearance_points(rank,pct_played)
+        try:
+            dd["internationalPoints"] = international_appearance_points(rank, pct_played)
+        except Exception as e:
+            st.error(f"international_appearance_points failed: {e}")
+            # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
 
