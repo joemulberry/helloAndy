@@ -138,11 +138,11 @@ if st.session_state.authenticated:
                 match = {
                     'competition': competitionName,
                     'competitionID': competitionID,
-                    'date' : cells[0].text.strip().split(' ')[1],
-                    'home/away': cells[2].text.strip(),
+                    'date' : cells[headers_.index('Date')].text.strip().split(' ')[1],
+                    'home/away': cells[headers_.index('Venue')].text.strip(),
                     'for': seniorNationalTeam,
-                    'against': cells[5].text.strip(),
-                    'result':cells[8].text.strip(),  
+                    'against': cells[headers_.index('Opponent')].text.strip(),
+                    'result':cells[headers_.index('Result')].text.strip(),  
                 }
                 matches.append(match)
 
@@ -151,8 +151,6 @@ if st.session_state.authenticated:
         see['2'] = box
         see['3'] = competitionID
         see['matches'] = matches
-        see['headers'] = headers_
-        see['headersIndex'] = headers_.index('Date')
 
 
  
