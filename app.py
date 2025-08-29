@@ -119,7 +119,7 @@ if st.session_state.authenticated:
         seniorURL = 'https://www.transfermarkt.co.uk/' + seniorNationalTeam + '/spielplan/verein/' + seniorNationalTeamID + '/plus/0?saison_id=' + str(year)
         seniorSoup = get_souped_page(seniorURL)
 
-        boxes = seniorSoup.find_all('div', class_='box')
+        boxes = seniorSoup.find_all('div', class_='box')[2::]
 
 
 
