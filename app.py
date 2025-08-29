@@ -341,7 +341,7 @@ if st.session_state.authenticated:
         # with col3:
         #     st.metric("% of competitive matches", f"{pct_played:.1f}%")
 
-    
+    st.write(ntInfo['for'][0])
     items = ['U21', 'U19', 'U18']
     if all(item not in sorted(ntInfo['for'].unique()) for item in items):  
         x = fetch_fifa_rankings_timeseries(ntInfo['for'][0])
