@@ -121,16 +121,15 @@ if st.session_state.authenticated:
 
         boxes = seniorSoup.find_all('div', class_='box')[2::]
 
+        see = {}
+
+        box = boxes[0]
+    
+        see['1'] = box.find('h2').text
+        see['2'] = box
 
 
-        see = {
-            '1':boxes,
-            '2':len(boxes),
-            '3':3,
-            '4':4,
-            '5':5,
-
-        }
+ 
         st.write(see)
         st.write(seniorURL)
 
