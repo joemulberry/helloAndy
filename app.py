@@ -326,26 +326,59 @@ if st.session_state.authenticated:
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
     # st.write(ntInfo)
     # Show per-team metrics and table
-    for team in sorted(ntInfo['for'].unique()):
-        team_df = ntInfo[(ntInfo['for'] == team) & (ntInfo['competitionID'] != 'FS')].copy()
-        team_games = len(team_df)
-        player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
-        pct_played = (player_games / team_games * 100) if team_games else 0.0
+    # for team in sorted(ntInfo['for'].unique()):
+    #     team_df = ntInfo[(ntInfo['for'] == team) & (ntInfo['competitionID'] != 'FS')].copy()
+    #     team_games = len(team_df)
+    #     player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
+    #     pct_played = (player_games / team_games * 100) if team_games else 0.0
 
-        st.subheader(team)
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("Competitive Team matches", team_games)
-        with col2:
-            st.metric("Player played", player_games)
-        with col3:
-            st.metric("% of competitive matches", f"{pct_played:.1f}%")
+    #     # st.subheader(team)
+        # col1, col2, col3 = st.columns(3)
+        # with col1:
+        #     st.metric("Competitive Team matches", team_games)
+        # with col2:
+        #     st.metric("Player played", player_games)
+        # with col3:
+        #     st.metric("% of competitive matches", f"{pct_played:.1f}%")
 
     
     items = ['U21', 'U19', 'U18']
     if all(item not in sorted(ntInfo['for'].unique()) for item in items):  
         x = fetch_fifa_rankings_timeseries(ntInfo['for'][0])
-        st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
+        rank = average_rank(x)
+
+        team_df = ntInfo[(ntInfo['for'] == ntInfo['for'][0]) & (ntInfo['competitionID'] != 'FS')].copy()
+        team_games = len(team_df)
+        player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
+        pct_played = (player_games / team_games) if team_games else 0.0
+
+        # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
+
+        if rank <=10:
+            if pct_played >= .30:
+                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 1-10 [ {average_rank} ]")
+            elif pct_played >= .20:
+                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the 30% threshold for a team ranked between 1-10 [ {average_rank} ] but they are close to meeting the auto-pass threshold")
+            else:
+                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the 30% threshold for a team ranked between 1-10 [ {average_rank} ]")
+    else:
+        st.error(f"AUTO-PASS FAIL: The player has not played for their senior national team. Therefore the auto-pass criteria has not been met")
+
+
+# FIFA World Ranking of National Team
+# % of Competitive Matches Required
+# 1–10
+# 30%
+# 11–20
+# 40%
+# 21–30
+# 60%
+# 31–50
+# 70%
+
+
+
+        if 
 
         # st.table(team_df)
 

@@ -228,7 +228,7 @@ def average_rank(df: pd.DataFrame) -> float:
     """Return the average rank from the trimmed DataFrame."""
     if df.empty or "rank" not in df.columns:
         return float("nan")
-    return df["rank"].mean(skipna=True)
+    return int(round(df["rank"].mean(skipna=True)))
 
 # Tip: to mirror your browser session if needed, export your cookies first, e.g.:
 # import os; os.environ["FIFA_COOKIE"] = "OptanonAlertBoxClosed=...; ak_bmsc=...; bm_sv=...; _abck=..."
