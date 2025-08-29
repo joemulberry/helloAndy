@@ -133,7 +133,7 @@ if st.session_state.authenticated:
 
             st.write(seniorURL)
             # if year == 2024:
-                # st.write(boxes)
+            st.write(boxes)
 
             for box in boxes:
                 
