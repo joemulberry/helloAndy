@@ -123,7 +123,7 @@ if st.session_state.authenticated:
         #     # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
-        autoPass(rank, pct_played, final_teams)
+        st.write(autoPass(rank, pct_played, final_teams))
         
 
     else:
@@ -133,18 +133,6 @@ if st.session_state.authenticated:
     st.write('international points', dd['internationalPoints'])
 
 
-        # if 
 
-        # st.table(team_df)
-
-  
-        
-        # transferDate
-        # day month year 
-        # soupNationalTeam = get_souped_page(nationalTeamURL)
-    # https://www.transfermarkt.co.uk/jude-bellingham/nationalmannschaft/spieler/581678/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2025&ende=27.08.2025&nurEinsatz=0 
-
-# https://www.transfermarkt.co.uk/luka-hyrylainen/nationalmannschaft/spieler/716898/verein_id/20796/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2024&ende=28.08.2025&nurEinsatz=0
-# https://www.transfermarkt.co.uk/luka-hyrylainen/nationalmannschaft/spieler/716898/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2024&ende=27.08.2025&nurEinsatz=0
 if __name__ == "__main__":
     pass
