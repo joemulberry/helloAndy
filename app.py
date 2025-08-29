@@ -9,17 +9,6 @@ from internationalMatches import international_appearance_points
 from fifaPull import fetch_fifa_rankings_timeseries, average_rank
 from utils import * 
 
-def subtract_years(d, years):
-    """Return a date `years` earlier than d, handling Feb 29 safely."""
-    try:
-        return d.replace(year=d.year - years)
-    except ValueError:
-        # Handle Feb 29 -> Feb 28 on non-leap years
-        return d.replace(month=2, day=28, year=d.year - years)
-
-
-st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
-
 
 
 
