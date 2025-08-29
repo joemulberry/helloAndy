@@ -133,6 +133,16 @@ if st.session_state.authenticated:
         for row in box.find('tbody').find_all('tr'):
             cells = row.find_all('td')
             
+            match = {
+                'competition': competitionName,
+                'competitionID': competitionID,
+                'date' : cells[1].text.strip().split(' ')[1],
+                'home/away': cells[3].text.strip(),
+                # 'for': cells[5].find('a')['alt'],
+                'against': cells[6].text.strip(),
+                'result':cells[10].text.strip(),  
+            }
+            matches.append(match)
 
 
             '''

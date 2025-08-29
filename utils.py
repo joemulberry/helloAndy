@@ -84,7 +84,7 @@ def getNationalTeam(playerURL, transferDate):
                     d = {
                             'competition': competition,
                             'competitionID': competitionID,
-                            'a' : cells[2].text,
+                            'date' : cells[2].text,
                             'home/away': cells[3].text,
                             'for': cells[4].find('a')['title'],
                             'against': cells[6].text.strip(),
