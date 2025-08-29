@@ -1,60 +1,74 @@
-
-
 def international_appearance_points(rank: int, percentage_played: float) -> int:
     """
-    Returns the points for international appearance based on FIFA rank and percentage played.
-    Returns -1 for Auto-Pass, 0 for no points, or integer points.
+    Return FA Men's GBE 2025/26 International Appearances points based on FIFA rank and
+    percentage of competitive senior internationals in the last 24 months.
+    Returns -1 for Auto-Pass entries, or an integer points value (0–10) otherwise.
     """
-    # Define ranking bands and corresponding point tables
-    # Each band: [(min_percent, max_percent, points or -1 for Auto-Pass)]
-    bands = [
-        # 1–10
-        (range(1, 11), [
-            (90, 100, -1),  # Auto-Pass
-            (80, 89, 15),
-            (70, 79, 10),
-            (60, 69, 7),
-            (50, 59, 5),
-        ]),
-        # 11–20
-        (range(11, 21), [
-            (90, 100, -1),  # Auto-Pass
-            (80, 89, 13),
-            (70, 79, 10),
-            (60, 69, 7),
-            (50, 59, 4),
-        ]),
-        # 21–30
-        (range(21, 31), [
-            (90, 100, 12),
-            (80, 89, 10),
-            (70, 79, 7),
-            (60, 69, 5),
-            (50, 59, 3),
-        ]),
-        # 31–50
-        (range(31, 51), [
-            (90, 100, 10),
-            (80, 89, 8),
-            (70, 79, 6),
-            (60, 69, 4),
-            (50, 59, 2),
-        ]),
-        # 51+
-        (range(51, 1000), [  # 1000 is arbitrary large number
-            (90, 100, 6),
-            (80, 89, 5),
-            (70, 79, 4),
-            (60, 69, 2),
-            (50, 59, 1),
-        ]),
-    ]
+    # Clamp percentage into [0, 100]
+    p = max(0.0, min(100.0, float(percentage_played)))
 
-    # Find which band the rank falls in
-    for band_range, thresholds in bands:
-        if rank in band_range:
-            for min_p, max_p, pts in thresholds:
-                if min_p <= percentage_played <= max_p:
-                    return pts
-            return 0  # No points for <50%
-    return 0  # Out of band (shouldn't happen)
+    def band_1_10(pct: float) -> int:
+        if 90 <= pct <= 100: return -1
+        if 80 <= pct < 90:  return -1
+        if 70 <= pct < 80:  return -1
+        if 60 <= pct < 70:  return -1
+        if 50 <= pct < 60:  return -1
+        if 40 <= pct < 50:  return -1
+        if 30 <= pct < 40:  return -1
+        if 20 <= pct < 30:  return 10
+        if 10 <= pct < 20:  return 9
+        if 1  <= pct < 10:  return 8
+        return 0
+
+    def band_11_20(pct: float) -> int:
+        if 90 <= pct <= 100: return -1
+        if 80 <= pct < 90:  return -1
+        if 70 <= pct < 80:  return -1
+        if 60 <= pct < 70:  return -1
+        if 50 <= pct < 60:  return -1
+        if 40 <= pct < 50:  return -1
+        if 30 <= pct < 40:  return 10
+        if 20 <= pct < 30:  return 9
+        if 10 <= pct < 20:  return 8
+        if 1  <= pct < 10:  return 7
+        return 0
+
+    def band_21_30(pct: float) -> int:
+        if 90 <= pct <= 100: return -1
+        if 80 <= pct < 90:  return -1
+        if 70 <= pct < 80:  return -1
+        if 60 <= pct < 70:  return -1
+        if 50 <= pct < 60:  return 10
+        if 40 <= pct < 50:  return 9
+        if 30 <= pct < 40:  return 8
+        if 20 <= pct < 30:  return 7
+        # 0 points below 20%
+        return 0
+
+    def band_31_50(pct: float) -> int:
+        if 90 <= pct <= 100: return -1
+        if 80 <= pct < 90:  return -1
+        if 70 <= pct < 80:  return -1
+        if 60 <= pct < 70:  return 10
+        if 50 <= pct < 60:  return 8
+        if 40 <= pct < 50:  return 7
+        if 30 <= pct < 40:  return 6
+        # 0 points below 30%
+        return 0
+
+    def band_51_plus(pct: float) -> int:
+        if 90 <= pct <= 100: return 2
+        if 80 <= pct < 90:  return 1
+        # 0 points otherwise
+        return 0
+
+    if 1 <= rank <= 10:
+        return band_1_10(p)
+    if 11 <= rank <= 20:
+        return band_11_20(p)
+    if 21 <= rank <= 30:
+        return band_21_30(p)
+    if 31 <= rank <= 50:
+        return band_31_50(p)
+    # 51+
+    return band_51_plus(p)
