@@ -358,7 +358,7 @@ if st.session_state.authenticated:
     # st.write(final_teams)
 
     dd = {'internationalPoints' : 0 }
-
+    st.write({"nt_rows": len(ntInfo), "unique_teams": ntInfo['for'].unique().tolist(), "final_teams": final_teams})
     if len(final_teams) > 0:
         x = fetch_fifa_rankings_timeseries(final_teams[0])
         rank = average_rank(x)
@@ -369,6 +369,7 @@ if st.session_state.authenticated:
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
         
+
         print('FUNCTION TRIGGERED')
         dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
