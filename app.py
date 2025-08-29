@@ -287,6 +287,67 @@ def fetch_fifa_rankings(date_id: str = "id14800", ranking_type: str = "football"
     return data.get("rankings", [])
 
 
+# --------- FIFA ranking time series function --------- #
+@st.cache_data(ttl=900)
+def fetch_fifa_rankings_timeseries(country_code: str, gender: int = 1, locale: str = "en") -> pd.DataFrame:
+    """Fetch the full FIFA ranking time series for a given country.
+
+    Args:
+        country_code: FIFA 3-letter code e.g. "BRA", "ENG" (case-insensitive).
+        gender: 1 for men, 2 for women (per inside.fifa.com API).
+        locale: language locale string (default "en").
+    Returns:
+        A pandas DataFrame with columns like: date, rank, points, previousRank,
+        confederationRank, name, countryCode; sorted by date ascending.
+    """
+    url = "https://inside.fifa.com/api/rankings/by-country"
+    headers = {
+        "Accept": "application/json, text/plain, */*",
+        "User-Agent": "Mozilla/5.0",
+    }
+    params = {
+        "gender": int(gender),
+        "countryCode": (country_code or "").strip().upper(),
+        "locale": locale,
+    }
+    resp = requests.get(url, headers=headers, params=params, timeout=20)
+    resp.raise_for_status()
+    data = resp.json() or {}
+
+    # The API sometimes wraps items; normalize defensively.
+    items = []
+    if isinstance(data, list):
+        items = data
+    else:
+        for key in ("rankings", "rankingHistory", "data", "items", "results"):
+            if isinstance(data.get(key), list):
+                items = data.get(key)
+                break
+        if not items and isinstance(data, dict):
+            # Fallback: maybe the dict itself is the item
+            items = [data]
+
+    rows = []
+    for entry in items:
+        entry = entry or {}
+        ri = entry.get("rankingItem", {}) if isinstance(entry, dict) else {}
+        rows.append({
+            "date": entry.get("lastUpdateDate") or entry.get("date") or ri.get("lastUpdateDate"),
+            "rank": ri.get("rank") or entry.get("rank"),
+            "points": ri.get("totalPoints") or entry.get("totalPoints"),
+            "previousRank": ri.get("previousRank") or entry.get("previousRank"),
+            "confederationRank": ri.get("confederationRank") or entry.get("confederationRank"),
+            "name": ri.get("name") or entry.get("name"),
+            "countryCode": ri.get("countryCode") or entry.get("countryCode") or params["countryCode"],
+        })
+
+    df = pd.DataFrame(rows)
+    if not df.empty and "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        df = df.sort_values("date").reset_index(drop=True)
+    return df
+
+
 def get_fifa_ranking_by_code(country_code: str, rankings: list | None = None):
     """Return a concise record for a 3-letter FIFA country code (e.g., ENG, ARG)."""
     if not country_code:
@@ -398,9 +459,14 @@ if st.session_state.authenticated:
 
     st.divider()
 
-    st.write(getFifaRanking(countryCode = 'BRA'))
+    # st.write(getFifaRanking(countryCode = 'BRA'))
+    # st.write(get_fifa_ranking_by_code(country_code = 'BRA'))
 
-    st.write(get_fifa_ranking_by_code(country_code = 'BRA'))
+    try:
+        ts = fetch_fifa_rankings_timeseries(country_code='BRA', gender=1)
+        st.write(ts.tail(10))  # show last 10 snapshots
+    except Exception as e:
+        st.error(f"FIFA ranking time series fetch failed: {e}")
 
     # # --- FIFA Ranking (manual country code) ---
     # with st.expander("FIFA Ranking (manual entry)"):
