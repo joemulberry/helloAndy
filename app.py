@@ -115,37 +115,38 @@ if st.session_state.authenticated:
         
         today_year = date.today().year
         years = [today_year - 2, today_year - 1, today_year]
-        
-        year = years[0] 
-        seniorURL = 'https://www.transfermarkt.co.uk/' + seniorNationalTeam + '/spielplan/verein/' + seniorNationalTeamID + '/plus/0?saison_id=' + str(year)
-        seniorSoup = get_souped_page(seniorURL)
-
-        boxes = seniorSoup.find_all('div', class_='box')[2::]
-
         see = {}
         matches = []
 
-        for box in boxes:
-        
-            competitionName = box.find('h2').text.strip()
-            competitionID = box.find('h2').find('a')['name']
+        for year in years:
 
-            headers_ = [th.text.strip() for th in box.find('thead').find_all('th')]
+            seniorURL = 'https://www.transfermarkt.co.uk/' + seniorNationalTeam + '/spielplan/verein/' + seniorNationalTeamID + '/plus/0?saison_id=' + str(year)
+            seniorSoup = get_souped_page(seniorURL)
 
-            for row in box.find('tbody').find_all('tr'):
-                cells = row.find_all('td')
-                
-                match = {
-                    'competition': competitionName,
-                    'competitionID': competitionID,
-                    'date' : cells[headers_.index('Date')].text.strip().split(' ')[1],
-                    'home/away': cells[headers_.index('Venue')].text.strip(),
-                    'for': seniorNationalTeam,
-                    'against': cells[headers_.index('Opponent')+1].text.strip(),
-                    'result':cells[headers_.index('Result')+1].text.strip(),  
-                    'year': year
-                }
-                matches.append(match)
+            boxes = seniorSoup.find_all('div', class_='box')[2::]
+
+
+            for box in boxes:
+            
+                competitionName = box.find('h2').text.strip()
+                competitionID = box.find('h2').find('a')['name']
+
+                headers_ = [th.text.strip() for th in box.find('thead').find_all('th')]
+
+                for row in box.find('tbody').find_all('tr'):
+                    cells = row.find_all('td')
+                    
+                    match = {
+                        'competition': competitionName,
+                        'competitionID': competitionID,
+                        'date' : cells[headers_.index('Date')].text.strip().split(' ')[1],
+                        'home/away': cells[headers_.index('Venue')].text.strip(),
+                        'for': seniorNationalTeam,
+                        'against': cells[headers_.index('Opponent')+1].text.strip(),
+                        'result':cells[headers_.index('Result')+1].text.strip(),  
+                        'year': year
+                    }
+                    matches.append(match)
 
 
 
