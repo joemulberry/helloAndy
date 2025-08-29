@@ -140,7 +140,10 @@ def parsePlayer(url):
     # https://www.transfermarkt.co.uk/jude-bellingham/nationalmannschaft/spieler/581678/verein_id/3299/plus/0?hauptwettbewerb=&wettbewerb_id=&trainer_id=&start=01.01.2025&ende=27.08.2025&nurEinsatz=0 
 
     # ------- name -------- #
-    store['name'] = soup.find('h1').text.split('\n')[3].strip()
+    store['name'] = url.split('.co.uk/')[1].split('/')[0].replace('-', ' ').title()
+
+
+    # https://www.transfermarkt.co.uk/lionel-messi/profil/spieler/28003
     
     # ------- info -------- #
     infoRaw = soup.find_all('li', class_ = 'data-header__label')
