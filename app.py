@@ -95,8 +95,9 @@ if st.session_state.authenticated:
 
     st.divider()
 
-    st.write(playerURL, transferDate)
+    # st.write(playerURL, transferDate)
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
+    st.write(ntInfo)
     items = ['U21', 'U19', 'U18']
     unique_teams = list(ntInfo['for'].unique())
     seniorNationalTeam = [team for team in unique_teams if all(item not in team for item in items)]
@@ -128,9 +129,27 @@ if st.session_state.authenticated:
         competitionName = box.find('h2').text.strip()
         competitionID = box.find('h2').find('a')['name']
 
+        matches = []
+        for row in box.find('tbody').find_all('tr'):
+            cells = row.find_all('td')
+            
+
+
+            '''
+                            'competition': competition,
+                            'competitionID': competitionID,
+                            'a' : cells[2].text,
+                            'home/away': cells[3].text,
+                            'for': cells[4].find('a')['title'],
+                            'against': cells[6].text.strip(),
+                            'result':cells[7].text.strip(),
+                        }
+                        '''
+
         see[''] = competitionName
         see['2'] = box
         see['3'] = competitionID
+        see['matches'] = matches
 
 
  
