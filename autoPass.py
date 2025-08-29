@@ -1,9 +1,9 @@
 import streamlit as st
 
 
-
-
 def autoPass(rank, pct_played, final_teams):
+
+
 
 
         if rank <=10:

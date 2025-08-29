@@ -124,12 +124,15 @@ if st.session_state.authenticated:
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
         autoPassResult, autoPassText = autoPass(rank, pct_played, final_teams)
-        st.write(autoPassResult, autoPassText)
         
 
     else:
-        st.error(f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met")
+        autoPassResult = 0
+        autoPassText = f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met"
 
+    st.header('GBE Eligibility')
+    st.subheader('AutoPass')
+    st.write(autoPassResult, autoPassText)
 
     st.write('international points', dd['internationalPoints'])
 
