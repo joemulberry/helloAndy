@@ -108,7 +108,7 @@ if st.session_state.authenticated:
         seniorNationalTeamID = None
         seniorNationalTeam = None
 
-    st.write(seniorNationalTeam, seniorNationalTeamID)
+    # st.write(seniorNationalTeam, seniorNationalTeamID)
 
     if seniorNationalTeam != None:
         
@@ -125,8 +125,12 @@ if st.session_state.authenticated:
 
         box = boxes[0]
     
-        see['1'] = box.find('h2').text
+        competitionName = box.find('h2').text.strip()
+        competitionID = box.find('h2').find('a')['name']
+
+        see[''] = competitionName
         see['2'] = box
+        see['3'] = competitionID
 
 
  
