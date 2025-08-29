@@ -360,38 +360,38 @@ if st.session_state.authenticated:
         if rank <=10:
             rankTarget = .30
             if pct_played >= rankTarget:
-                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 1-10 [ {average_rank} ]")
+                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 1-10 [ {rank} ]")
             elif pct_played >= .20:
-                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 1-10 [ {average_rank} ] but they are close to meeting the auto-pass threshold")
+                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 1-10 [ {rank} ] but they are close to meeting the auto-pass threshold")
             else:
-                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 1-10 [ {average_rank} ]")
+                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 1-10 [ {rank} ]")
         
         elif rank <=20:
             rankTarget = .40
             if pct_played >= rankTarget:
-                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 11-20 [ {average_rank} ]")
+                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 11-20 [ {rank} ]")
             elif pct_played >= .20:
-                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 11-20 [ {average_rank} ] but they are close to meeting the auto-pass threshold")
+                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 11-20 [ {rank} ] but they are close to meeting the auto-pass threshold")
             else:
-                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 11-20 [ {average_rank} ]")
+                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 11-20 [ {rank} ]")
         
         elif rank <=30:
             rankTarget = .60
             if pct_played >= rankTarget:
-                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 21–30 [ {average_rank} ]")
+                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 21–30 [ {rank} ]")
             elif pct_played >= .20:
-                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 21–30 [ {average_rank} ] but they are close to meeting the auto-pass threshold")
+                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 21–30 [ {rank} ] but they are close to meeting the auto-pass threshold")
             else:
-                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 21–30 [ {average_rank} ]")
+                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 21–30 [ {rank} ]")
         
         elif rank <=50:
             rankTarget = .70
             if pct_played >= rankTarget:
-                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 31–50 [ {average_rank} ]")
+                st.success(f"AUTO-PASS GRANTED: The player has played {pct_played * 100} % of competitive matches in the last 24 months for a team ranked between 31–50 [ {rank} ]")
             elif pct_played >= .20:
-                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 31–50 [ {average_rank} ] but they are close to meeting the auto-pass threshold")
+                st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the {rankTarget*100}% threshold for a team ranked between 31–50 [ {rank} ] but they are close to meeting the auto-pass threshold")
             else:
-                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 31–50 [ {average_rank} ]")
+                st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the {rankTarget*100}%  threshold for a team ranked between 31–50 [ {rank} ]")
 
         
         elif rank >50:
