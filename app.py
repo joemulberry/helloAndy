@@ -35,6 +35,7 @@ def getNationalTeam(playerURL, transferDate):
 
 
     nationalTeamURL = playerURL.replace('profil', 'nationalmannschaft')
+    # print(nationalTeamURL)
     soup = get_souped_page(nationalTeamURL)
 
 
@@ -52,7 +53,7 @@ def getNationalTeam(playerURL, transferDate):
         nationalTeamURLSubSection =  nationalTeamURL + part1 + startDate + part2
         soup2 = get_souped_page(nationalTeamURLSubSection)
         
-        print(nationalTeamURLSubSection)
+        print('/////////', nationalTeamURLSubSection)
         
         if len(soup2.find_all('table')) >= 3:
             table = soup2.find_all('table')[3]
