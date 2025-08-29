@@ -97,56 +97,62 @@ if st.session_state.authenticated:
 
   
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
-    st.write(ntInfo)
     items = ['U21', 'U19', 'U18']
     unique_teams = list(ntInfo['for'].unique())
-    final_teams = [team for team in unique_teams if all(item not in team for item in items)]
-    # st.write(final_teams)
+    seniorNationalTeam = [team for team in unique_teams if all(item not in team for item in items)][0]
 
-    dd = {'internationalPoints' : 0 }
-    st.write({"nt_rows": len(ntInfo), "unique_teams": ntInfo['for'].unique().tolist(), "final_teams": final_teams})
+    st.write(seniorNationalTeam)
+
+    # st.write(ntInfo)
+    # items = ['U21', 'U19', 'U18']
+    # unique_teams = list(ntInfo['for'].unique())
+    # final_teams = [team for team in unique_teams if all(item not in team for item in items)]
+    # # st.write(final_teams)
+
+    # dd = {'internationalPoints' : 0 }
+    # st.write({"nt_rows": len(ntInfo), "unique_teams": ntInfo['for'].unique().tolist(), "final_teams": final_teams})
     
-    if len(final_teams) > 0:
-        x = fetch_fifa_rankings_timeseries(final_teams[0])
-        rank = average_rank(x)
-        team_df = ntInfo[(ntInfo['for'] == final_teams[0]) & (ntInfo['competitionID'] != 'FS')].copy()
-        team_games = len(team_df)
-        player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
-        pct_played = (player_games / team_games) if team_games else 0.0
+    # if len(final_teams) > 0:
+    #     x = fetch_fifa_rankings_timeseries(final_teams[0])
+    #     rank = average_rank(x)
+    #     team_df = ntInfo[(ntInfo['for'] == final_teams[0]) & (ntInfo['competitionID'] != 'FS')].copy()
+    #     team_games = len(team_df)
+    #     player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
+    #     pct_played = (player_games / team_games) if team_games else 0.0
         
 
-        # print('FUNCTION TRIGGERED')
-        # try:
-        dd["internationalPoints"] = international_appearance_points(rank, pct_played)
-        # except Exception as e:
-        #     st.error(f"international_appearance_points failed: {e}")
-        #     # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
+    #     # print('FUNCTION TRIGGERED')
+    #     # try:
+    #     dd["internationalPoints"] = international_appearance_points(rank, pct_played)
+    #     # except Exception as e:
+    #     #     st.error(f"international_appearance_points failed: {e}")
+    #     #     # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
-        # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
-        autoPassResult, autoPassText = autoPass(rank, pct_played, final_teams)
+    #     # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
+    #     autoPassResult, autoPassText = autoPass(rank, pct_played, final_teams)
         
 
-    else:
-        autoPassResult = 0
-        autoPassText = f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met"
+    # else:
+    #     autoPassResult = 0
+    #     autoPassText = f"AUTO-PASS FAIL: The player has not played for their {final_teams[0]}'s national team. Therefore the auto-pass criteria has not been met"
 
-    st.header('GBE Eligibility')
-    st.subheader('AutoPass')
-    if autoPassResult == 1:
-        st.badge("Auto-Pass Obtained", icon=":material/check:", color="green")
-        st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
-        st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
-        st.text(autoPassText)
-    elif autoPassResult == 2:
-        st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
-        st.text(autoPassText)
-    else: 
-        st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
-        st.text(autoPassText)
-    st.write(autoPassResult, autoPassText)
+    # st.header('GBE Eligibility')
+    # st.subheader('AutoPass')
+    # if autoPassResult == 1:
+    #     st.badge("Auto-Pass Obtained", icon=":material/check:", color="green")
+    #     st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
+    #     st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
+    #     st.text(autoPassText)
+    # elif autoPassResult == 2:
+    #     st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
+    #     st.text(autoPassText)
+    # else: 
+    #     st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
+    #     st.text(autoPassText)
+    # st.write(autoPassResult, autoPassText)
 
 
-    st.write('international points', dd['internationalPoints'])
+    # st.write('international points', dd['internationalPoints'])
 
 
 
