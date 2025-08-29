@@ -125,9 +125,12 @@ if st.session_state.authenticated:
 
             boxes = seniorSoup.find_all('div', class_='box')[2::]
             st.write(seniorURL)
-            st.write(boxes)
+            if year == 2024:
+                st.write(boxes)
 
             for box in boxes:
+                
+                st.write(boxes)
             
                 competitionName = box.find('h2').text.strip()
                 competitionID = box.find('h2').find('a')['name']
