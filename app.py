@@ -368,7 +368,8 @@ if st.session_state.authenticated:
         team_games = len(team_df)
         player_games = int(team_df['played'].sum()) if 'played' in team_df.columns else 0
         pct_played = (player_games / team_games) if team_games else 0.0
-
+        
+        print('FUNCTION TRIGGERED')
         dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
