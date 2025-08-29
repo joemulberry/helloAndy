@@ -127,7 +127,7 @@ if st.session_state.authenticated:
             
             boxes = seniorSoup.find_all('div', class_='box')
             if 'last games' in boxes[2].find('h2').text.lower():
-                boxes = boxes[3::]
+                boxes = boxes[4::]
             else:
                 boxes = boxes[2::]
 
