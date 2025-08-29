@@ -61,6 +61,8 @@ def international_appearance_points(rank: int, percentage_played: float) -> int:
         if 80 <= pct < 90:  return 1
         # 0 points otherwise
         return 0
+    
+    print('rank', rank, 'pPlayed', p)
 
     if 1 <= rank <= 10:
         return band_1_10(p)
