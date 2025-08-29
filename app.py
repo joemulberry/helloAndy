@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from random import choice 
 import requests 
 
+from fifaPull import fetch_fifa_rankings_timeseries, average_rank
+
 def subtract_years(d, years):
     """Return a date `years` earlier than d, handling Feb 29 safely."""
     try:
@@ -16,33 +18,6 @@ def subtract_years(d, years):
 
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
-
-
-
-
-
-def getFifaRanking(countryCode):
-
-    def get_souped_page(page_url):
-        headers_list = [
-            {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
-            {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15'},
-            {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
-        ]
-        headers = choice(headers_list)
-        pageTree = requests.get(page_url, headers=headers)
-        pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
-        return(pageSoup)
-    
-    url = 'https://inside.fifa.com/fifa-world-ranking/' + countryCode + '?gender=men'
-    soup = get_souped_page(url)
-
-    for table in soup.find_all('table'):
-        if 'Final Rk' in table.find('thead'):
-            break
-
-    
-    return soup.find_all('table')
 
 def getNationalTeam(playerURL, transferDate):
     
@@ -262,116 +237,6 @@ def parsePlayer(url):
 
     return store
 
-# ------- FIFA rankings (via inside.fifa.com API) ------- #
-@st.cache_data(ttl=900)
-def fetch_fifa_rankings(date_id: str = "id14800", ranking_type: str = "football"):
-    """Fetch the latest FIFA rankings list.
-
-    Args:
-        date_id: e.g., "id14800" (use a specific snapshot id)
-        ranking_type: "football" (men) or "womens-football" (women)
-    Returns:
-        List of ranking entries (dicts). Each item includes a `rankingItem` key
-        with `countryCode`, `rank`, `totalPoints`, etc.
-    """
-    url = (
-        f"https://inside.fifa.com/api/ranking-overview?locale=en&dateId={date_id}&rankingType={ranking_type}"
-    )
-    headers = {
-        "Accept": "application/json, text/plain, */*",
-        "User-Agent": "Mozilla/5.0"
-    }
-    resp = requests.get(url, headers=headers, timeout=20)
-    resp.raise_for_status()
-    data = resp.json()
-    return data.get("rankings", [])
-
-
-# --------- FIFA ranking time series function --------- #
-@st.cache_data(ttl=900)
-def fetch_fifa_rankings_timeseries(country_code: str, gender: int = 1, locale: str = "en") -> pd.DataFrame:
-    """Fetch the full FIFA ranking time series for a given country.
-
-    Args:
-        country_code: FIFA 3-letter code e.g. "BRA", "ENG" (case-insensitive).
-        gender: 1 for men, 2 for women (per inside.fifa.com API).
-        locale: language locale string (default "en").
-    Returns:
-        A pandas DataFrame with columns like: date, rank, points, previousRank,
-        confederationRank, name, countryCode; sorted by date ascending.
-    """
-    url = "https://inside.fifa.com/api/rankings/by-country"
-    headers = {
-        "Accept": "application/json, text/plain, */*",
-        "User-Agent": "Mozilla/5.0",
-    }
-    params = {
-        "gender": int(gender),
-        "countryCode": (country_code or "").strip().upper(),
-        "locale": locale,
-    }
-    resp = requests.get(url, headers=headers, params=params, timeout=20)
-    resp.raise_for_status()
-    data = resp.json() or {}
-
-    # The API sometimes wraps items; normalize defensively.
-    items = []
-    if isinstance(data, list):
-        items = data
-    else:
-        for key in ("rankings", "rankingHistory", "data", "items", "results"):
-            if isinstance(data.get(key), list):
-                items = data.get(key)
-                break
-        if not items and isinstance(data, dict):
-            # Fallback: maybe the dict itself is the item
-            items = [data]
-
-    rows = []
-    for entry in items:
-        entry = entry or {}
-        ri = entry.get("rankingItem", {}) if isinstance(entry, dict) else {}
-        rows.append({
-            "date": entry.get("lastUpdateDate") or entry.get("date") or ri.get("lastUpdateDate"),
-            "rank": ri.get("rank") or entry.get("rank"),
-            "points": ri.get("totalPoints") or entry.get("totalPoints"),
-            "previousRank": ri.get("previousRank") or entry.get("previousRank"),
-            "confederationRank": ri.get("confederationRank") or entry.get("confederationRank"),
-            "name": ri.get("name") or entry.get("name"),
-            "countryCode": ri.get("countryCode") or entry.get("countryCode") or params["countryCode"],
-        })
-
-    df = pd.DataFrame(rows)
-    if not df.empty and "date" in df.columns:
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
-        df = df.sort_values("date").reset_index(drop=True)
-    return df
-
-
-def get_fifa_ranking_by_code(country_code: str, rankings: list | None = None):
-    """Return a concise record for a 3-letter FIFA country code (e.g., ENG, ARG)."""
-    if not country_code:
-        return None
-    code = country_code.strip().upper()
-    if rankings is None:
-        rankings = fetch_fifa_rankings()
-    for entry in rankings:
-        ri = (entry or {}).get("rankingItem", {})
-        if (ri or {}).get("countryCode", "").upper() == code:
-            return {
-                "name": ri.get("name"),
-                "countryCode": ri.get("countryCode"),
-                "rank": ri.get("rank"),
-                "points": ri.get("totalPoints"),
-                "previousRank": ri.get("previousRank"),
-                "lastUpdateDate": (entry or {}).get("lastUpdateDate"),
-            }
-    return rankings
-
-# def _on_player_url_change():
-#     url = st.session_state.get('playerURL', '')
-#     if url:
-#         st.session_state['playerInfo'] = parsePlayer(url)
 
 
 APP_PASSWORD = "letmein"
@@ -392,8 +257,6 @@ if not st.session_state.authenticated:
             st.error("Wrong password, try again.")
 
 if st.session_state.authenticated:
-
-    
 
 
     with st.sidebar:
@@ -459,36 +322,7 @@ if st.session_state.authenticated:
 
     st.divider()
 
-    # st.write(getFifaRanking(countryCode = 'BRA'))
-    # st.write(get_fifa_ranking_by_code(country_code = 'BRA'))
-
-    try:
-        ts = fetch_fifa_rankings_timeseries(country_code='BRA', gender=1)
-        st.write(ts.tail(10))  # show last 10 snapshots
-    except Exception as e:
-        st.error(f"FIFA ranking time series fetch failed: {e}")
-
-    # # --- FIFA Ranking (manual country code) ---
-    # with st.expander("FIFA Ranking (manual entry)"):
-    #     st.caption("Enter a FIFA 3-letter country code (e.g., ENG, ARG). Uses inside.fifa.com public API.")
-    #     fifa_code = st.text_input("FIFA country code", value="")
-    #     ranking_type = st.selectbox("Ranking type", ["football", "womens-football"], index=0)
-    #     date_id = st.text_input("dateId (snapshot)", value="id14800")
-    #     if fifa_code:
-    #         try:
-    #             rankings = fetch_fifa_rankings(date_id=date_id, ranking_type=ranking_type)
-    #             rec = get_fifa_ranking_by_code(fifa_code, rankings)
-    #             if rec:
-    #                 c1, c2, c3 = st.columns(3)
-    #                 c1.metric("Rank", rec["rank"])
-    #                 c2.metric("Points", f"{rec['points']:.2f}")
-    #                 c3.write(f"Last update: {rec['lastUpdateDate']}")
-    #                 st.write(f"**{rec['name']}** ({rec['countryCode']}) — previous rank: {rec['previousRank']}")
-    #             else:
-    #                 st.warning("No ranking found for that code.")
-    #         except Exception as e:
-    #             st.error(f"FIFA ranking fetch failed: {e}")
-
+  
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
     # st.write(ntInfo)
     # Show per-team metrics and table
@@ -506,6 +340,12 @@ if st.session_state.authenticated:
             st.metric("Player played", player_games)
         with col3:
             st.metric("% of competitive matches", f"{pct_played:.1f}%")
+
+    
+    items = ['U21', 'U19', 'U18']
+    if all(item not in sorted(ntInfo['for'].unique()) for item in items):  
+        x = fetch_fifa_rankings_timeseries(ntInfo['for'][0])
+        st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
 
         # st.table(team_df)
 
