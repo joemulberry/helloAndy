@@ -132,14 +132,14 @@ if st.session_state.authenticated:
 
     st.header('GBE Eligibility')
     st.subheader('AutoPass')
-    if autoPassText == 1:
+    if autoPassResult == 2:
         st.badge("Auto-Pass Obtained", icon=":material/check:", color="green")
         st.text(autoPassText)
-    elif autoPassText == 2:
-        # st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
+    elif autoPassResult == 1:
+        st.badge("Auto-Pass Nearly Granted", icon=":material/error:", color="orange")
         st.text(autoPassText)
     else: 
-        # st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
+        st.badge("Auto-Pass Not Granted", icon=":material/dangerous:", color="red")
         st.text(autoPassText)
     st.write(autoPassResult, autoPassText)
 
