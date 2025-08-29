@@ -87,8 +87,8 @@ def getNationalTeam(playerURL, transferDate):
                     national = 'national team' in text_lower
                     noInfo = 'no information' in text_lower
                     muscularProblems = 'muscular problems' in text_lower
-                    ligamentInjury = 'Ligament injury' in text_lower
-                    adductorPain = 'Adductor pain' in text_lower
+                    ligamentInjury = 'ligament injury' in text_lower
+                    adductorPain = 'adductor pain' in text_lower
 
 
                     if not (not_in_squad or injury or bench or 
