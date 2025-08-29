@@ -305,7 +305,7 @@ def get_fifa_ranking_by_code(country_code: str, rankings: list | None = None):
                 "previousRank": ri.get("previousRank"),
                 "lastUpdateDate": (entry or {}).get("lastUpdateDate"),
             }
-    return None
+    return rankings
 
 # def _on_player_url_change():
 #     url = st.session_state.get('playerURL', '')
