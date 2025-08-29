@@ -123,7 +123,8 @@ if st.session_state.authenticated:
         #     # dd['internationalPoints'] = international_appearance_points(rank,pct_played)
 
         # st.write(ntInfo['for'][0], "Average rank (last 30 months):", average_rank(x))
-        st.write(autoPass(rank, pct_played, final_teams))
+        autoPassResult, autoPassText = autoPass(rank, pct_played, final_teams)
+        st.write(autoPassResult, autoPassText)
         
 
     else:
