@@ -123,38 +123,27 @@ if st.session_state.authenticated:
         boxes = seniorSoup.find_all('div', class_='box')[2::]
 
         see = {}
-
-        box = boxes[0]
-    
-        competitionName = box.find('h2').text.strip()
-        competitionID = box.find('h2').find('a')['name']
-
         matches = []
-        for row in box.find('tbody').find_all('tr'):
-            cells = row.find_all('td')
-            
-            match = {
-                'competition': competitionName,
-                'competitionID': competitionID,
-                'date' : cells[0].text.strip().split(' ')[1],
-                'home/away': cells[2].text.strip(),
-                # 'for': cells[5].find('a')['alt'],
-                'against': cells[5].text.strip(),
-                'result':cells[8].text.strip(),  
-            }
-            matches.append(match)
 
+        for box in boxes:
+        
+            competitionName = box.find('h2').text.strip()
+            competitionID = box.find('h2').find('a')['name']
 
-            '''
-                            'competition': competition,
-                            'competitionID': competitionID,
-                            'a' : cells[2].text,
-                            'home/away': cells[3].text,
-                            'for': cells[4].find('a')['title'],
-                            'against': cells[6].text.strip(),
-                            'result':cells[7].text.strip(),
-                        }
-                        '''
+            for row in box.find('tbody').find_all('tr'):
+                cells = row.find_all('td')
+                
+                match = {
+                    'competition': competitionName,
+                    'competitionID': competitionID,
+                    'date' : cells[0].text.strip().split(' ')[1],
+                    'home/away': cells[2].text.strip(),
+                    'for': seniorNationalTeam,
+                    'against': cells[5].text.strip(),
+                    'result':cells[8].text.strip(),  
+                }
+                matches.append(match)
+
 
         see[''] = competitionName
         see['2'] = box
