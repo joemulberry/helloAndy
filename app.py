@@ -38,7 +38,7 @@ def getFifaRanking(countryCode):
             break
 
     
-    return table
+    return soup.find_all('table')
 
 def getNationalTeam(playerURL, transferDate):
     
