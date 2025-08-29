@@ -4,8 +4,7 @@ def international_appearance_points(rank: int, percentage_played: float) -> int:
     percentage of competitive senior internationals in the last 24 months.
     Returns -1 for Auto-Pass entries, or an integer points value (0–10) otherwise.
     """
-
-    return [rank, percentage_played]
+    percentage_played = percentage_played* 100
     # Clamp percentage into [0, 100]
    
     p = max(0.0, min(100.0, float(percentage_played)))
