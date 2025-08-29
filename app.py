@@ -17,6 +17,29 @@ def subtract_years(d, years):
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
 
+def getFifaRanking(countryCode):
+
+    def get_souped_page(page_url):
+        headers_list = [
+            {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15'},
+            {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+        ]
+        headers = choice(headers_list)
+        pageTree = requests.get(page_url, headers=headers)
+        pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
+        return(pageSoup)
+    
+    url = 'https://inside.fifa.com/fifa-world-ranking/' + countryCode + '?gender=men'
+    soup = get_souped_page(url)
+
+    for table in soup.find_all('table'):
+        if 'Final Rk' in table.find('thead'):
+            break
+
+    
+    return table
+
 def getNationalTeam(playerURL, transferDate):
     
     def get_souped_page(page_url):
@@ -371,26 +394,28 @@ if st.session_state.authenticated:
 
     st.divider()
 
-    # --- FIFA Ranking (manual country code) ---
-    with st.expander("FIFA Ranking (manual entry)"):
-        st.caption("Enter a FIFA 3-letter country code (e.g., ENG, ARG). Uses inside.fifa.com public API.")
-        fifa_code = st.text_input("FIFA country code", value="")
-        ranking_type = st.selectbox("Ranking type", ["football", "womens-football"], index=0)
-        date_id = st.text_input("dateId (snapshot)", value="id14800")
-        if fifa_code:
-            try:
-                rankings = fetch_fifa_rankings(date_id=date_id, ranking_type=ranking_type)
-                rec = get_fifa_ranking_by_code(fifa_code, rankings)
-                if rec:
-                    c1, c2, c3 = st.columns(3)
-                    c1.metric("Rank", rec["rank"])
-                    c2.metric("Points", f"{rec['points']:.2f}")
-                    c3.write(f"Last update: {rec['lastUpdateDate']}")
-                    st.write(f"**{rec['name']}** ({rec['countryCode']}) — previous rank: {rec['previousRank']}")
-                else:
-                    st.warning("No ranking found for that code.")
-            except Exception as e:
-                st.error(f"FIFA ranking fetch failed: {e}")
+    st.write(getFifaRanking(countryCode = 'BRA'))
+
+    # # --- FIFA Ranking (manual country code) ---
+    # with st.expander("FIFA Ranking (manual entry)"):
+    #     st.caption("Enter a FIFA 3-letter country code (e.g., ENG, ARG). Uses inside.fifa.com public API.")
+    #     fifa_code = st.text_input("FIFA country code", value="")
+    #     ranking_type = st.selectbox("Ranking type", ["football", "womens-football"], index=0)
+    #     date_id = st.text_input("dateId (snapshot)", value="id14800")
+    #     if fifa_code:
+    #         try:
+    #             rankings = fetch_fifa_rankings(date_id=date_id, ranking_type=ranking_type)
+    #             rec = get_fifa_ranking_by_code(fifa_code, rankings)
+    #             if rec:
+    #                 c1, c2, c3 = st.columns(3)
+    #                 c1.metric("Rank", rec["rank"])
+    #                 c2.metric("Points", f"{rec['points']:.2f}")
+    #                 c3.write(f"Last update: {rec['lastUpdateDate']}")
+    #                 st.write(f"**{rec['name']}** ({rec['countryCode']}) — previous rank: {rec['previousRank']}")
+    #             else:
+    #                 st.warning("No ranking found for that code.")
+    #         except Exception as e:
+    #             st.error(f"FIFA ranking fetch failed: {e}")
 
     ntInfo = pd.DataFrame(getNationalTeam(playerURL, transferDate))
     # st.write(ntInfo)
