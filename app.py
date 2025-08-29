@@ -152,6 +152,7 @@ if st.session_state.authenticated:
         see['3'] = competitionID
         see['matches'] = matches
         see['headers'] = headers_
+        see['headers'] = headers_.index('Date')
 
 
  
