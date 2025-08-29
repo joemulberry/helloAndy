@@ -123,7 +123,14 @@ if st.session_state.authenticated:
             seniorURL = 'https://www.transfermarkt.co.uk/' + seniorNationalTeam + '/spielplan/verein/' + seniorNationalTeamID + '/plus/0?saison_id=' + str(year)
             seniorSoup = get_souped_page(seniorURL)
 
-            boxes = seniorSoup.find_all('div', class_='box')[2::]
+
+            
+            boxes = seniorSoup.find_all('div', class_='box')
+            if 'last games' in boxes[2].find('h2').text.lower():
+                boxes = boxes[3::]
+            else:
+                boxes = boxes[2::]
+
             st.write(seniorURL)
             # if year == 2024:
                 # st.write(boxes)
@@ -133,7 +140,6 @@ if st.session_state.authenticated:
                 # st.write(boxes)
             
                 competitionName = box.find('h2').text.strip()
-                st.write(box.find('h2'))
                 competitionID = box.find('h2').find('a')['name']
 
                 headers_ = [th.text.strip() for th in box.find('thead').find_all('th')]
