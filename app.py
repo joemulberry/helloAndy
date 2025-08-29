@@ -110,7 +110,7 @@ if st.session_state.authenticated:
     st.write(seniorNationalTeam, seniorNationalTeamID)
 
     today_year = date.today().year
-    str(today_year)
+    st.write(today_year)
     seniorURL = 'https://www.transfermarkt.co.uk/england/spielplan/verein/3299/plus/0?saison_id=2024'
 
     # st.write(ntInfo)
