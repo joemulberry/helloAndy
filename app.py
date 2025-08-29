@@ -17,6 +17,10 @@ def subtract_years(d, years):
 st.set_page_config(page_title="GBE ESC Checker", page_icon="👋", layout="centered", initial_sidebar_state="expanded")
 
 
+
+
+
+
 def getFifaRanking(countryCode):
 
     def get_souped_page(page_url):
@@ -395,6 +399,8 @@ if st.session_state.authenticated:
     st.divider()
 
     st.write(getFifaRanking(countryCode = 'BRA'))
+
+    st.write(get_fifa_ranking_by_code(country_code = 'BRA'))
 
     # # --- FIFA Ranking (manual country code) ---
     # with st.expander("FIFA Ranking (manual entry)"):
