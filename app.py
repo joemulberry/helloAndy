@@ -361,6 +361,12 @@ if st.session_state.authenticated:
                 st.warning(f"AUTO-PASS NEAR-MISS: The player has played {pct_played * 100} % of competitive matches in the last 24 months, this is just below the 30% threshold for a team ranked between 1-10 [ {average_rank} ] but they are close to meeting the auto-pass threshold")
             else:
                 st.error(f"AUTO-PASS FAIL: The player has only played {pct_played * 100} % of competitive matches in the last 24 months, this is not above the 30% threshold for a team ranked between 1-10 [ {average_rank} ]")
+        elif rank >50:
+            st.error(f"AUTO-PASS FAIL: The player's senior national team rank [{rank}] is below the auto-pass threshold of 50. Therefore the auto-pass criteria has not been met")
+
+        else:
+            st.warning(f"RANK UNDER CONSTRUCTION")
+
     else:
         st.error(f"AUTO-PASS FAIL: The player has not played for their senior national team. Therefore the auto-pass criteria has not been met")
 
